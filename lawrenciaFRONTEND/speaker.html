@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="HACSA Axis speaker studio">
+  <title>HACSA Axis | Speaker Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .role-page{min-height:100vh;background:var(--cream)}
+    .role-nav{display:grid;gap:8px;margin-top:30px}
+    .brand-link{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+    .role-nav a{color:#d8e2d9;text-decoration:none;padding:14px 12px;border-radius:10px;font-size:13px;font-weight:600;letter-spacing:.01em;display:block;transition:all .2s ease}
+    .role-nav a.active,.role-nav a:hover{background:#f3e7c8;color:var(--green);font-weight:700}
+    .workspace-banner{background:linear-gradient(120deg,rgba(18,58,38,.84),rgba(18,58,38,.45)),url('images/room.avif') center/cover;color:#fff;border-radius:22px;padding:36px 34px;box-shadow:0 18px 42px rgba(18,58,38,.12);margin-bottom:22px}
+    .workspace-banner h2{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.08;margin:14px 0 12px;max-width:620px}
+    .workspace-banner p{color:#d8e2d9;max-width:680px;line-height:1.75;font-size:15px;margin:0}
+    .section-head{margin:18px 0 16px}
+    .section-head h3{margin:0;font-size:1.25rem;color:var(--green);font-family:'Playfair Display',serif}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:8px}
+    .role-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;min-height:220px;box-shadow:0 8px 24px rgba(18,58,38,.04)}
+    .role-card h3{margin:0 0 10px;font-size:1.5rem;line-height:1.2;color:var(--green);font-family:'Playfair Display',serif}
+    .role-card p{color:var(--muted);font-size:14px;line-height:1.7;margin:0 0 18px}
+    .role-link{display:inline-block;color:var(--green);font-size:12px;font-weight:700;text-decoration:none;margin-top:auto;padding-top:10px;border-top:1px solid var(--line);width:100%}
+    .role-link:hover{text-decoration:underline}
+    .donation-card{background:#fff4d6;border-color:var(--gold);box-shadow:0 10px 28px rgba(212,160,40,.16)}
+    .donation-card h3{color:var(--green)}
+    .donation-card p{color:#5f552f}
+    .donation-card .role-link{color:var(--green);border-color:rgba(117,87,21,.25)}
+    @media(max-width:900px){.sidebar{position:static;width:100%;min-height:auto}.app-shell{display:block}.content{padding:25px 20px}.sidebar-bottom{margin-top:25px}.topbar{padding:20px}.menu{display:none}.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="role-page">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand-link" href="speaker.html">
+        <div class="brand"><div class="brand-mark">HA</div><div><strong>HACSA</strong><span>AXIS</span></div></div>
+      </a>
+      <p class="sidebar-caption">Speaker Studio · Prepare. Connect. Deliver.</p>
+      <nav class="role-nav">
+        <a class="active" href="speaker.html">Speaker Studio</a>
+        <a href="index.html?role=speaker&view=schedule">My schedule</a>
+        <a href="index.html?role=speaker&view=support">Support</a>
+        <a href="https://www.thehacsa.org/donate/" target="_blank" rel="noopener">Support HACSA ↗</a>
+      </nav>
+      <div class="sidebar-bottom"><a href="signin.html">Sign out</a></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div><span class="eyebrow">HACSA AXIS</span><h1>Speaker Studio</h1></div><div class="top-actions"><button class="avatar" aria-label="Speaker profile">SP</button></div></header>
+      <section class="content">
+        <div class="workspace-banner">
+          <span class="tag">SPEAKER ACCESS</span>
+          <h2>Own the room before you enter it.</h2>
+          <p>A focused space to review your scheduled appearances, prepare for each session and stay aligned with the programme team.</p>
+        </div>
+
+        <div class="section-head">
+          <h3>Your speaker tools</h3>
+        </div>
+
+        <div class="grid">
+          <article class="role-card">
+            <div>
+              <h3>Scheduled appearances</h3>
+              <p>See every assigned panel, workshop, dialogue and event experience in one place.</p>
+            </div>
+            <a class="role-link" href="index.html?role=speaker&amp;view=speaker">Open Speaker Studio →</a>
+          </article>
+
+          <article class="role-card">
+            <div>
+              <h3>My schedule</h3>
+              <p>Review timings, venues and the wider programme around your appearances.</p>
+            </div>
+            <a class="role-link" href="index.html?role=speaker&amp;view=schedule">Open schedule →</a>
+          </article>
+
+          <article class="role-card">
+            <div>
+              <h3>Support</h3>
+              <p>Request help with logistics, access, venues, technical needs or accessibility.</p>
+            </div>
+            <a class="role-link" href="index.html?role=speaker&amp;view=support">Get support →</a>
+          </article>
+
+          <article class="role-card donation-card">
+            <div>
+              <span class="tag">HACSA GIVING</span>
+              <h3>Give with purpose</h3>
+              <p>Your contribution helps sustain heritage programmes, expand Tech4Girls and support young people,
+                speakers and communities building opportunity across Africa and the diaspora.</p>
+            </div>
+            <a class="role-link" href="https://www.thehacsa.org/donate/" target="_blank" rel="noopener">Donate on HACSA website ↗</a>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
