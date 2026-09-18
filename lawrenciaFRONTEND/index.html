@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="HACSA Axis — event and smart operations platform." />
+  <title>HACSA Axis | Summit User Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">HA</div>
+        <div><strong>HACSA</strong><span>AXIS</span></div>
+      </div>
+      <p class="sidebar-caption">Your summit. Your access. Your axis.</p>
+      <nav id="nav">
+        <button class="nav-link active" data-view="dashboard">⌂ <span>Overview</span></button>
+        <button class="nav-link" data-view="schedule">▦ <span>Schedule</span></button>
+        <button class="nav-link" data-view="badge">▣ <span>Digital Badge</span></button>
+        <button class="nav-link" data-view="scanner">⌗ <span>Scan Badge</span></button>
+        <button class="nav-link" data-view="engage">◈ <span>Polls & Feedback</span></button>
+        <button class="nav-link" data-view="support">⚑ <span>Support</span></button>
+        <a class="nav-link" href="https://www.thehacsa.org/donate/" target="_blank" rel="noopener">✦ <span>Support HACSA
+            ↗</span></a>
+
+
+      </nav>
+      <div class="role-status" id="roleStatus"></div>
+      <div class="sidebar-bottom"><a href="https://summit.thehacsa.org/" target="_blank">Official Summit Site↗</a><a
+          href="https://www.thehacsa.org/" target="_blank">HACSA Foundation ↗</a></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><button class="menu" id="menu">☰</button>
+        <div><span class="eyebrow">HACSA AXIS</span>
+          <h1 id="pageTitle">Welcome to your axis</h1>
+        </div>
+        <div class="top-actions"><button class="icon-btn" id="notifyBtn" type="button" aria-label="Open notifications"
+            title="Notifications">&#128276;<span class="dot"></span></button><button class="avatar"
+            id="profileBtn">LA</button></div>
+      </header>
+      <section class="content" id="content"></section>
+    </main>
+  </div>
+  <div class="modal hidden" id="modal">
+    <div class="modal-card"><button class="modal-close" id="modalClose">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>

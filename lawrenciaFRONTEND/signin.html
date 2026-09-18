@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to HACSA Axis">
+    <title>HACSA Axis | Sign in</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --green: #123a26;
+            --gold: #d4a028;
+            --cream: #faf7ee;
+            --ink: #1c1c1a;
+            --muted: #7c8179;
+            --line: #e5dfd0;
+            --red: #b02a24
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif
+        }
+
+        button,
+        input {
+            font: inherit
+        }
+
+        .page {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.05fr .95fr
+        }
+
+        .visual {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100vh;
+            padding: 42px 7%;
+            overflow: hidden;
+            color: #fff;
+            background: var(--green)
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px
+        }
+
+        .mark {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--gold);
+            display: grid;
+            place-items: center;
+            color: var(--gold);
+            font-family: 'Playfair Display';
+            font-size: 19px
+        }
+
+        .brand strong,
+        .brand span {
+            display: block;
+            letter-spacing: 2px
+        }
+
+        .brand span {
+            margin-top: 3px;
+            color: #d7c18b;
+            font-size: 11px
+        }
+
+        .eyebrow {
+            color: var(--gold);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.7px
+        }
+
+        .visual-copy {
+            max-width: 650px
+        }
+
+        .visual-copy h1 {
+            font-family: 'Playfair Display';
+            font-size: clamp(2.5rem, 5vw, 5rem);
+            line-height: 1.02;
+            margin: 18px 0
+        }
+
+        .visual-copy p {
+            max-width: 500px;
+            color: #e1eadf;
+            line-height: 1.7
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8vh 9%
+        }
+
+        .panel-head {
+            max-width: 480px
+        }
+
+        .tag {
+            display: inline-flex;
+            padding: 5px 8px;
+            border-radius: 100px;
+            background: #f3e7c8;
+            color: #755715;
+            font-size: 10px;
+            font-weight: 700
+        }
+
+        .panel h2 {
+            font-family: 'Playfair Display';
+            font-size: 38px;
+            margin: 15px 0 8px
+        }
+
+        .intro {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6
+        }
+
+        .tabs {
+            display: flex;
+            gap: 24px;
+            margin: 26px 0 22px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .tab {
+            padding: 0 0 12px;
+            border: 0;
+            border-bottom: 3px solid transparent;
+            background: transparent;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .tab.active {
+            border-color: var(--gold);
+            color: var(--green)
+        }
+
+        .form {
+            display: grid;
+            gap: 15px;
+            max-width: 460px
+        }
+
+        .field {
+            display: grid;
+            gap: 7px
+        }
+
+        .field label {
+            font-size: 12px;
+            font-weight: 700
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: #fff;
+            font-size: 13px
+        }
+
+        .button {
+            border: 0;
+            border-radius: 8px;
+            padding: 13px 16px;
+            background: var(--gold);
+            color: var(--green);
+            font-weight: 700;
+            cursor: pointer
+        }
+
+        .forgot {
+            width: fit-content;
+            padding: 0;
+            border: 0;
+            background: transparent;
+            color: var(--green);
+            font-size: 12px;
+            text-decoration: underline;
+            cursor: pointer
+        }
+
+        .note {
+            margin: 0;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5
+        }
+
+        .error {
+            min-height: 17px;
+            margin: 0;
+            color: var(--red);
+            font-size: 12px
+        }
+
+        .hidden {
+            display: none
+        }
+
+        @media(max-width:850px) {
+            .page {
+                grid-template-columns: 1fr
+            }
+
+            .visual {
+                min-height: 430px;
+                padding: 28px 7%
+            }
+
+            .panel {
+                padding: 38px 7%
+            }
+        }
+
+        @media(max-width:500px) {
+            .visual {
+                min-height: 390px
+            }
+
+            .panel h2 {
+                font-size: 31px
+            }
+        }
+
+        /* Premium HACSA Axis authentication treatment */
+        body {
+            background: #f7f3e9
+        }
+
+        .page {
+            grid-template-columns: minmax(0, 1.15fr) minmax(440px, .85fr);
+            background: #f7f3e9
+        }
+
+        .visual {
+            position: relative;
+            isolation: isolate;
+            justify-content: space-between;
+            padding: 42px 7%;
+            overflow: hidden;
+            background: #123a26
+        }
+
+        .visual-image,
+        .visual-wash,
+        .kente-accent {
+            position: absolute;
+            inset: 0;
+            pointer-events: none
+        }
+
+        .visual-image {
+            z-index: -3;
+            background: url('hacsa-modern-center.svg') center/cover no-repeat;
+            filter: saturate(.88) contrast(1.05)
+        }
+
+        .visual-wash {
+            z-index: -2;
+            background: linear-gradient(115deg, rgba(8, 38, 25, .94) 4%, rgba(18, 58, 38, .74) 54%, rgba(18, 58, 38, .3) 100%)
+        }
+
+        .kente-accent {
+            z-index: -1;
+            inset: auto -7% 0 auto;
+            width: 48%;
+            height: 48%;
+            opacity: .22;
+            background: repeating-linear-gradient(135deg, #d4a028 0 12px, transparent 12px 25px, #b02a24 25px 37px, transparent 37px 50px);
+            clip-path: polygon(24% 0, 100% 0, 100% 100%, 0 100%)
+        }
+
+        .visual-copy {
+            max-width: 680px;
+            margin: auto 0 4vh
+        }
+
+        .visual-copy h1 {
+            font-size: clamp(3rem, 6vw, 6.8rem);
+            letter-spacing: .01em;
+            margin: 18px 0 22px;
+            text-shadow: 0 8px 30px rgba(0, 0, 0, .18)
+        }
+
+        .visual-copy p {
+            font-size: 17px;
+            max-width: 480px;
+            margin: 0;
+            color: #eef3e9
+        }
+
+        .visual-highlights {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin-top: 34px
+        }
+
+        .visual-highlights span {
+            padding: 9px 12px;
+            border: 1px solid rgba(255, 255, 255, .24);
+            border-radius: 100px;
+            color: #f7e7b6;
+            font-size: 11px;
+            background: rgba(10, 35, 23, .24);
+            backdrop-filter: blur(4px)
+        }
+
+        .panel {
+            padding: 6vh 8%;
+            background: #f7f3e9
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            margin: auto;
+            padding: 42px;
+            background: #fff;
+            border: 1px solid #e9e2d4;
+            box-shadow: 0 22px 70px rgba(18, 58, 38, .1);
+            border-radius: 4px
+        }
+
+        .auth-brand-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 28px;
+            color: var(--green);
+            font-size: 13px;
+            letter-spacing: 1.8px;
+            font-weight: 700
+        }
+
+        .small-mark {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            font-family: 'Playfair Display';
+            font-size: 13px
+        }
+
+        .auth-card .tag {
+            margin-bottom: 8px
+        }
+
+        .auth-card h2 {
+            font-size: 42px;
+            line-height: 1.05;
+            margin: 14px 0 10px
+        }
+
+        .auth-card .intro {
+            font-size: 14px;
+            margin: 0 0 28px
+        }
+
+        .auth-card .tabs {
+            margin: 0 0 28px
+        }
+
+        .auth-card .form {
+            gap: 16px
+        }
+
+        .auth-card .field label {
+            font-size: 11px;
+            color: #4c514a;
+            letter-spacing: .02em
+        }
+
+        .auth-card .field input,
+        .auth-card .field select {
+            border-color: #d9d4c8;
+            border-radius: 3px;
+            padding: 14px 13px;
+            min-height: 48px
+        }
+
+        .auth-card .field input:focus,
+        .auth-card .field select:focus {
+            outline: 2px solid rgba(212, 160, 40, .28);
+            border-color: var(--gold)
+        }
+
+        .password-wrap {
+            position: relative
+        }
+
+        .password-wrap input {
+            padding-right: 64px !important
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 0;
+            background: transparent;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 6px;
+            cursor: pointer
+        }
+
+        .auth-card .button {
+            width: 100%;
+            min-height: 50px;
+            border-radius: 3px;
+            background: var(--green);
+            color: #fff;
+            letter-spacing: .02em;
+            transition: background .2s
+        }
+
+        .auth-card .button:hover {
+            background: #1d5138
+        }
+
+        .auth-card .remember {
+            font-size: 11px;
+            color: var(--muted)
+        }
+
+        .auth-card .forgot {
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 11px
+        }
+
+        .security-note {
+            margin: 28px 0 0;
+            padding-top: 18px;
+            border-top: 1px solid var(--line);
+            color: #667066;
+            font-size: 11px
+        }
+
+        .security-note span {
+            color: var(--gold);
+            font-size: 9px;
+            margin-right: 6px
+        }
+
+        @media(max-width:850px) {
+            .page {
+                grid-template-columns: 1fr
+            }
+
+            .visual {
+                min-height: 570px;
+                padding: 30px 7%
+            }
+
+            .visual-copy {
+                margin: auto 0 0
+            }
+
+            .visual-copy h1 {
+                font-size: clamp(3rem, 13vw, 5rem)
+            }
+
+            .panel {
+                padding: 30px 18px
+            }
+
+            .auth-card {
+                padding: 30px 24px
+            }
+
+            .auth-card h2 {
+                font-size: 36px
+            }
+        }
+
+        @media(max-width:500px) {
+            .visual {
+                min-height: 510px
+            }
+
+            .visual-highlights {
+                gap: 7px
+            }
+
+            .visual-highlights span {
+                font-size: 10px
+            }
+
+            .auth-card {
+                padding: 28px 20px
+            }
+
+            .auth-card h2 {
+                font-size: 32px
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="page">
+        <section class="visual" aria-label="HACSA Axis event center experience">
+            <div class="visual-image" aria-hidden="true"></div>
+            <div class="visual-wash" aria-hidden="true"></div>
+            <div class="kente-accent" aria-hidden="true"></div>
+            <div class="brand">
+                <div class="mark">HA</div>
+                <div><strong>HACSA</strong><span>AXIS</span></div>
+                <div class="visual-copy">
+                    <span class="eyebrow">EVENTS · SMART OPERATIONS · ENGAGEMENT</span>
+                    <h1>Connect.<br>Engage.<br>Coordinate.</h1>
+                    <p>One platform for meaningful events and intelligent operations.</p>
+                    <div class="visual-highlights"><span>Participants & Speakers</span><span>Distinct participant &
+                            speaker experiences</span><span>Secure backend-ready access</span></div>
+                </div>
+            </div>
+        </section>
+        <section class="panel">
+            <div class="auth-card">
+                <div class="panel-head">
+                    <div class="auth-brand-line">
+                        <div class="small-mark">HA</div><span>HACSA <b>AXIS</b></span>
+                    </div><span class="tag">SECURE WORKSPACE ACCESS</span>
+                    <h2 id="title">Create an account</h2>
+                    <p class="intro" id="intro">Sign in to access your personalized workspace.</p>
+                </div>
+                <div class="tabs" role="tablist"><button class="tab active" data-mode="signin" role="tab">Sign
+                        in</button><button class="tab" data-mode="signup" role="tab">Sign up</button></div>
+                <form class="form" id="form">
+                    <div class="field"><label for="email">Email, username, or user ID</label><input id="email"
+                            type="text" autocomplete="username" placeholder="Enter your email, username, or ID"
+                            required></div>
+                    <div class="field" id="passwordField"><label for="password">Password</label>
+                        <div class="password-wrap"><input id="password" type="password" autocomplete="current-password"
+                                placeholder="Enter your password" required><button class="password-toggle"
+                                id="passwordToggle" type="button" aria-label="Show password">Show</button></div>
+                    </div>
+                    <label class="remember" id="rememberField"><input id="remember" type="checkbox"> Remember me on this
+                        device</label>
+                    <button class="forgot" id="forgotPassword" type="button">Forgot password?</button>
+                    <div class="field hidden" id="codeField"><label for="code">Unique access code</label><input
+                            id="code" autocomplete="one-time-code" placeholder="Enter your code"></div>
+                    <div class="field hidden" id="roleField"><label for="role">Role</label><select id="role">
+                            <option value="">Select your role</option>
+                            <option>Participant</option>
+                            <option>Speaker</option>
+
+                        </select></div>
+                    <div class="field hidden" id="nameField"><label for="name">Full name</label><input id="name"
+                            autocomplete="name" placeholder="Your full name"></div>
+                    <div class="field hidden" id="confirmPasswordField"><label for="confirmPassword">Confirm
+                            password</label><input id="confirmPassword" type="password" autocomplete="new-password"
+                            placeholder="Confirm your password"></div>
+                    <button class="button" id="submit" type="submit">Sign In</button>
+                    <p class="note">Need a workspace? <a href="participant.html">Open participant view</a> or <a
+                            href="speaker.html">speaker studio</a>.</p>
+                    <p class="error" id="error" role="alert"></p>
+                </form>
+                <p class="security-note"><span aria-hidden="true">◆</span> Secure access for verified HACSA Axis users.
+                </p>
+            </div>
+        </section>
+    </main>
+    <script>
+        const $ = selector => document.querySelector(selector);
+        const storeKey = 'hacsaAxisMockAuth';
+        const readStore = () => JSON.parse(localStorage.getItem(storeKey) || '{"registrations":[],"audit":[]}');
+        const writeStore = store => localStorage.setItem(storeKey, JSON.stringify(store));
+        const digest = async value => { const bytes = new TextEncoder().encode(value); const hash = await crypto.subtle.digest('SHA-256', bytes); return [...new Uint8Array(hash)].map(byte => byte.toString(16).padStart(2, '0')).join(''); };
+        let mode = 'signin';
+        function setMode(next) { const signup = next === 'signup'; mode = next; document.querySelectorAll('[data-mode]').forEach(tab => tab.classList.toggle('active', tab.dataset.mode === mode)); $('#title').textContent = signup ? 'Create an account' : 'Welcome Back'; $('#intro').textContent = signup ? 'Select your role and submit an application. Admin review is required before access is granted.' : 'Sign in to access your personalized workspace.'; $('#submit').textContent = signup ? 'Submit for admin review' : 'Sign In'; $('#nameField').classList.toggle('hidden', !signup); $('#confirmPasswordField').classList.toggle('hidden', !signup); $('#roleField').classList.toggle('hidden', !signup); $('#passwordField').classList.remove('hidden'); $('#rememberField').classList.toggle('hidden', signup); $('#forgotPassword').classList.toggle('hidden', signup); $('#codeField').classList.add('hidden'); $('#name').required = signup; $('#confirmPassword').required = signup; $('#role').required = signup; $('#password').required = true; $('#code').required = false; $('#error').textContent = '' }
+        $('.tabs').addEventListener('click', event => { const tab = event.target.closest('[data-mode]'); if (tab) setMode(tab.dataset.mode) });
+        $('#passwordToggle').addEventListener('click', () => { const visible = $('#password').type === 'text'; $('#password').type = visible ? 'password' : 'text'; $('#passwordToggle').textContent = visible ? 'Show' : 'Hide'; $('#passwordToggle').setAttribute('aria-label', visible ? 'Show password' : 'Hide password') });
+        $('#forgotPassword').addEventListener('click', () => { $('#error').textContent = 'Password reset requests will be handled by Operations support in the production service.' });
+        $('#form').addEventListener('submit', async event => { event.preventDefault(); const email = $('#email').value.trim().toLowerCase(); const store = readStore(); if (mode === 'signup') { if (!$('#name').value.trim() || !$('#role').value || !$('#password').value || $('#password').value !== $('#confirmPassword').value) { $('#error').textContent = 'Complete all fields and make sure the passwords match.'; return } if ($('#password').value.length < 8) { $('#error').textContent = 'Password must contain at least 8 characters.'; return } if (store.registrations.some(item => item.email === email)) { $('#error').textContent = 'This email already has a registration request.'; return } store.registrations.push({ id: crypto.randomUUID(), name: $('#name').value.trim(), email, role: $('#role').value, organization: '', passwordHash: await digest($('#password').value), status: 'Pending Admin Verification', createdAt: new Date().toISOString() }); store.audit.push({ action: 'Registration submitted', email, at: new Date().toISOString() }); writeStore(store); $('#error').textContent = 'Your registration has been submitted successfully. An administrator will review your application before activation.'; $('#form').reset(); return } if (!email || !$('#password').value) { $('#error').textContent = 'Enter an email and password to continue.'; return } const item = store.registrations.find(entry => entry.email === email); const role = item?.role?.toLowerCase() || 'participant'; const destination = new URL('index.html', window.location.href); destination.searchParams.set('role', role); destination.searchParams.set('email', email); window.location.href = destination.href });
+    </script>
+</body>
+
+</html>

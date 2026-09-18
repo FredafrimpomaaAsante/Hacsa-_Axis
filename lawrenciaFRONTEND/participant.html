@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HACSA Axis participant workspace">
+    <title>HACSA Axis | Participant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .role-page {
+            min-height: 100vh;
+            background: var(--cream)
+        }
+
+        .role-nav {
+            display: grid;
+            gap: 8px;
+            margin-top: 30px
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #fff
+        }
+
+        .role-nav a {
+            color: #d8e2d9;
+            text-decoration: none;
+            padding: 14px 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: .01em;
+            display: block;
+            transition: all .2s ease
+        }
+
+        .role-nav a.active,
+        .role-nav a:hover {
+            background: #f3e7c8;
+            color: var(--green);
+            font-weight: 700
+        }
+
+        .workspace-banner {
+            background: linear-gradient(120deg, #123a26 0%, #1d5138 100%);
+            color: #fff;
+            border-radius: 22px;
+            padding: 36px 34px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px;
+            box-shadow: 0 18px 42px rgba(18, 58, 38, .12);
+            margin-bottom: 22px
+        }
+
+        .workspace-banner-copy {
+            max-width: 680px
+        }
+
+        .workspace-banner-image {
+            width: 220px;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, .35);
+            flex-shrink: 0
+        }
+
+        .workspace-banner h2 {
+            font-family: 'Playfair Display';
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            line-height: 1.08;
+            margin: 14px 0 12px;
+            max-width: 620px
+        }
+
+        .workspace-banner p {
+            color: #d8e2d9;
+            max-width: 680px;
+            line-height: 1.75;
+            font-size: 15px;
+            margin: 0
+        }
+
+        .section-head {
+            margin: 18px 0 16px
+        }
+
+        .section-head h3 {
+            margin: 0;
+            font-size: 1.25rem;
+            color: var(--green);
+            font-family: 'Playfair Display'
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 8px
+        }
+
+        .role-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 24px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 220px;
+            box-shadow: 0 8px 24px rgba(18, 58, 38, .04)
+        }
+
+        .role-card h3 {
+            margin: 0 0 10px;
+            font-size: 1.5rem;
+            line-height: 1.2;
+            color: var(--green);
+            font-family: 'Playfair Display'
+        }
+
+        .role-card p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0 0 18px
+        }
+
+        .role-link {
+            display: inline-block;
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid var(--line);
+            width: 100%
+        }
+
+        .role-link:hover {
+            text-decoration: underline
+        }
+
+        .donation-card {
+            background: #fff4d6;
+            border-color: var(--gold);
+            box-shadow: 0 10px 28px rgba(212, 160, 40, .16)
+        }
+
+        .donation-card h3 {
+            color: var(--green)
+        }
+
+        .donation-card p {
+            color: #5f552f
+        }
+
+        .donation-card .role-link {
+            color: var(--green);
+            border-color: rgba(117, 87, 21, .25)
+        }
+
+        @media(max-width:900px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                min-height: auto
+            }
+
+            .app-shell {
+                display: block
+            }
+
+            .content {
+                padding: 25px 20px
+            }
+
+            .sidebar-bottom {
+                margin-top: 25px
+            }
+
+            .topbar {
+                padding: 20px
+            }
+
+            .menu {
+                display: none
+            }
+
+            .grid {
+                grid-template-columns: 1fr
+            }
+
+            .workspace-banner {
+                align-items: flex-start;
+                flex-direction: column
+            }
+
+            .workspace-banner-image {
+                width: 100%;
+                height: 190px
+            }
+        }
+    </style>
+</head>
+
+<body class="role-page">
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand-link" href="participant.html">
+                <div class="brand">
+                    <div class="brand-mark">HA</div>
+                    <div><strong>HACSA</strong><span>AXIS</span></div>
+                </div>
+            </a>
+            <p class="sidebar-caption">Participant Lounge</p>
+            <nav class="role-nav">
+                <a class="active" href="participant.html">Overview</a>
+                <a href="index.html?role=participant&view=schedule">My schedule</a>
+                <a href="index.html?role=participant&view=badge">Digital badge</a>
+                <a href="index.html?role=participant&view=networking">Networking</a>
+                <a href="index.html?role=participant&view=support">Support</a>
+                <a href="https://www.thehacsa.org/donate/" target="_blank" rel="noopener">Support HACSA ↗</a>
+            </nav>
+            <div class="sidebar-bottom"><a href="signin.html">Sign out</a></div>
+        </aside>
+        <main class="main">
+            <header class="topbar">
+                <div><span class="eyebrow">HACSA AXIS</span>
+                    <h1>Participant Lounge</h1>
+                </div>
+                <div class="top-actions"><button class="avatar" aria-label="Participant profile">PA</button></div>
+            </header>
+            <section class="content">
+                <div class="workspace-banner">
+                    <div class="workspace-banner-copy">
+                        <span class="tag">PARTICIPANT ACCESS</span>
+                        <h2>Your summit, organised around you.</h2>
+                        <p>Save sessions, keep your digital badge ready, connect with people and follow the experiences
+                            that matter to you.</p>
+                    </div>
+                    <img class="workspace-banner-image" src="images/heritage.png"
+                        alt="African heritage and culture at HACSA">
+                </div>
+
+                <div class="section-head">
+                    <h3>Your experience, your way</h3>
+                </div>
+
+                <div class="grid">
+                    <article class="role-card" id="schedule">
+                        <div>
+                            <h3>My schedule</h3>
+                            <p>Browse the HACSA Axis programme and save sessions to your personal agenda.</p>
+                        </div>
+                        <a class="role-link" href="index.html?role=participant&view=schedule">Open schedule →</a>
+                    </article>
+
+                    <article class="role-card" id="badge">
+                        <div>
+                            <h3>Digital badge</h3>
+                            <p>Keep your event access badge available for check-in and participation.</p>
+                        </div>
+                        <a class="role-link" href="index.html?role=participant&view=badge">Open badge →</a>
+                    </article>
+
+                    <article class="role-card networking-card" id="networking">
+                        <div>
+                            <span class="tag">CONNECT WITH PURPOSE</span>
+                            <h3>Networking lounge</h3>
+                            <p>Meet mentors, founders, participants and culture-makers aligned with your interests.</p>
+                        </div>
+                        <a class="role-link" href="index.html?role=participant&view=networking">Open networking →</a>
+                    </article>
+
+                    <article class="role-card" id="support">
+                        <div>
+                            <h3>Support</h3>
+                            <p>Ask for help with registration, access, venues, schedules or accessibility.</p>
+                        </div>
+                        <a class="role-link" href="index.html?role=participant&view=support">Get support →</a>
+                    </article>
+
+                    <article class="role-card donation-card" id="donate">
+                        <div>
+                            <span class="tag">HACSA GIVING</span>
+                            <h3>Give with purpose</h3>
+                            <p>Your contribution helps preserve African heritage, support Tech4Girls and create more
+                                opportunities for education, innovation and community connection.</p>
+                        </div>
+                        <a class="role-link" href="https://www.thehacsa.org/donate/" target="_blank"
+                            rel="noopener">Donate on HACSA website ↗</a>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

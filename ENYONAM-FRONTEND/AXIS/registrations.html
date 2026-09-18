@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HACSA Core | Registrations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/style.css">
+  <script src="https://kit.fontawesome.com/69b7f0c38b.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">H</span><div><strong>HACSA</strong><small>AXIS</small></div></div>
+      <p class="sidebar-intro">Empowering ideas. Enabling impact.</p>
+      <nav class="nav-menu" aria-label="Primary navigation">
+        <p class="nav-label">Workspace</p>
+        <a class="nav-link" href="index.html"><i class="fa-solid fa-table-cells-large"></i><span>Dashboard</span></a>
+        <a class="nav-link" href="event.html"><i class="fa-regular fa-calendar"></i><span>Events</span></a>
+        <a class="nav-link" href="participants.html"><i class="fa-solid fa-users"></i><span>Participants</span></a>
+        <a class="nav-link active" href="registrations.html"><i class="fa-solid fa-clipboard-list"></i><span>Registrations</span></a>
+        <a class="nav-link" href="submissions.html"><i class="fa-solid fa-file-arrow-up"></i><span>Submissions</span></a>
+        <a class="nav-link" href="analyticsandreports.html"><i class="fa-solid fa-chart-line"></i><span>Analytics & reports</span></a>
+        <p class="nav-label settings-label">System</p>
+        <a class="nav-link" href="settings.html"><i class="fa-solid fa-sliders"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-quote"><p>â€œSankofa: it is not wrong to go back for that which you have forgotten.â€</p><small>â€” Akan proverb</small></div>
+      <div class="sidebar-footer"><span class="status-dot"></span> All systems operational</div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button><div class="breadcrumbs"><span>HACSA Core</span><i class="fa-solid fa-chevron-right"></i><strong>Registrations</strong></div><label class="search-wrapper"><i class="fa-solid fa-magnifying-glass"></i><input id="globalSearch" type="search" placeholder="Search registrations..." aria-label="Search registrations"></label><button class="notification-btn" aria-label="Notifications"><i class="fa-regular fa-bell"></i><span>3</span></button><div class="profile-area"><div class="avatar">KA</div><div class="profile-text"><strong>Kofi Agyeman</strong><small>Programme lead</small></div></div></header>
+      <div class="page-content">
+        <section class="welcome-banner"><div><span class="eyebrow">REGISTRATION CONTROL</span><h1>Registrations & payments</h1><p>Confirm participants, track payment status, and keep every booking accounted for.</p></div><div class="banner-badge"><strong>Same roots.<br><b>Bigger dreams.</b></strong><small>HACSA Innovation Programme</small></div></section>
+        <div class="registration-content">
+          <div class="view-heading"><div><h2>Registration overview</h2><p>248 registrations across the current programme.</p></div><button class="primary-btn" id="exportBtn"><i class="fa-solid fa-download"></i> Export report</button></div>
+          <div class="payment-cards"><article class="payment-card revenue"><span class="payment-icon"><i class="fa-solid fa-coins"></i></span><p>Total revenue</p><strong>GHâ‚µ 25,400</strong><small>All registration payments</small></article><article class="payment-card paid"><span class="payment-icon"><i class="fa-solid fa-circle-check"></i></span><p>Paid</p><strong>GHâ‚µ 21,000</strong><small>198 confirmed payments</small></article><article class="payment-card pending"><span class="payment-icon"><i class="fa-regular fa-clock"></i></span><p>Pending</p><strong>GHâ‚µ 4,400</strong><small>32 payments to follow up</small></article><article class="payment-card refunded"><span class="payment-icon"><i class="fa-solid fa-rotate-left"></i></span><p>Refunded</p><strong>GHâ‚µ 500</strong><small>2 refunds processed</small></article></div>
+          <article class="panel registration-panel"><div class="table-toolbar registration-toolbar"><label class="inline-search"><i class="fa-solid fa-magnifying-glass"></i><input id="participantSearch" type="search" placeholder="Search participants, events, or email"></label><select id="paymentFilter" aria-label="Filter by payment status"><option value="all">All payments</option><option value="Paid">Paid</option><option value="Pending">Pending</option><option value="Refunded">Refunded</option></select><select id="registrationFilter" aria-label="Filter by registration status"><option value="all">All registrations</option><option value="Confirmed">Confirmed</option><option value="Awaiting confirmation">Awaiting confirmation</option></select></div><div class="table-scroll"><table class="data-table registration-table"><thead><tr><th>Participant</th><th>Event</th><th>Registration status</th><th>Payment</th><th>Amount</th><th>Action</th></tr></thead><tbody id="registrationRows"><tr data-payment="Paid" data-registration="Confirmed"><td><div class="person"><span class="mini-avatar">AM</span><div><strong>Ama Mensah</strong><small>ama.mensah@email.com</small></div></div></td><td>Opening Ceremony</td><td><span class="status">Confirmed</span></td><td><span class="payment-status paid-status"><i class="fa-solid fa-circle-check"></i> Paid</span></td><td>GHâ‚µ 250</td><td><button class="row-action confirmed" disabled>Confirmed</button></td></tr><tr data-payment="Pending" data-registration="Awaiting confirmation"><td><div class="person"><span class="mini-avatar">DA</span><div><strong>Daniel Asante</strong><small>daniel.asante@email.com</small></div></div></td><td>Build Your Idea Workshop</td><td><span class="status review">Awaiting confirmation</span></td><td><span class="payment-status pending-status"><i class="fa-regular fa-clock"></i> Pending</span></td><td>GHâ‚µ 120</td><td><button class="row-action confirm-btn">Confirm</button></td></tr><tr data-payment="Paid" data-registration="Confirmed"><td><div class="person"><span class="mini-avatar">KO</span><div><strong>Kwame Osei</strong><small>kwame.osei@email.com</small></div></div></td><td>Hackathon Begins</td><td><span class="status">Confirmed</span></td><td><span class="payment-status paid-status"><i class="fa-solid fa-circle-check"></i> Paid</span></td><td>GHâ‚µ 250</td><td><button class="row-action confirmed" disabled>Confirmed</button></td></tr><tr data-payment="Refunded" data-registration="Confirmed"><td><div class="person"><span class="mini-avatar">AO</span><div><strong>Abena Owusu</strong><small>abena.owusu@email.com</small></div></div></td><td>Mentorship Sessions</td><td><span class="status">Confirmed</span></td><td><span class="payment-status refunded-status"><i class="fa-solid fa-rotate-left"></i> Refunded</span></td><td>GHâ‚µ 180</td><td><button class="row-action confirmed" disabled>Confirmed</button></td></tr><tr data-payment="Pending" data-registration="Awaiting confirmation"><td><div class="person"><span class="mini-avatar">YA</span><div><strong>Yaw Addo</strong><small>yaw.addo@email.com</small></div></div></td><td>Opening Ceremony</td><td><span class="status review">Awaiting confirmation</span></td><td><span class="payment-status pending-status"><i class="fa-regular fa-clock"></i> Pending</span></td><td>GHâ‚µ 250</td><td><button class="row-action confirm-btn">Confirm</button></td></tr></tbody></table></div><p class="empty-registrations" id="emptyRegistrations" hidden>No registrations match these filters.</p></article>
+        </div>
+        <div class="toast" id="toast" role="status"></div>
+      </div>
+    </main>
+  </div>
+  <script>
+    const rows = [...document.querySelectorAll('#registrationRows tr')];
+    const search = document.querySelector('#participantSearch');
+    const paymentFilter = document.querySelector('#paymentFilter');
+    const registrationFilter = document.querySelector('#registrationFilter');
+    const emptyState = document.querySelector('#emptyRegistrations');
+    const toast = document.querySelector('#toast');
+    const showToast = (message) => { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2200); };
+    const applyFilters = () => { const term = search.value.toLowerCase(); const payment = paymentFilter.value; const registration = registrationFilter.value; let visible = 0; rows.forEach((row) => { const matches = row.textContent.toLowerCase().includes(term) && (payment === 'all' || row.dataset.payment === payment) && (registration === 'all' || row.dataset.registration === registration); row.hidden = !matches; if (matches) visible += 1; }); emptyState.hidden = visible !== 0; };
+    [search, paymentFilter, registrationFilter].forEach((control) => control.addEventListener('input', applyFilters));
+    document.querySelectorAll('.confirm-btn').forEach((button) => button.addEventListener('click', () => { const row = button.closest('tr'); row.dataset.registration = 'Confirmed'; row.querySelector('.status').textContent = 'Confirmed'; row.querySelector('.status').classList.remove('review'); button.textContent = 'Confirmed'; button.classList.remove('confirm-btn'); button.classList.add('confirmed'); button.disabled = true; showToast('Registration confirmed'); applyFilters(); }));
+    document.querySelector('#exportBtn').addEventListener('click', () => { const csv = ['Participant,Email,Event,Registration Status,Payment,Amount', ...rows.filter((row) => !row.hidden).map((row) => { const cells = row.querySelectorAll('td'); return [cells[0].innerText.replace(/\n/g, ' '), cells[0].querySelector('small').textContent, cells[1].textContent, row.dataset.registration, row.dataset.payment, cells[4].textContent].map((value) => `"${value.replace(/"/g, '""')}"`).join(','); })].join('\n'); const link = document.createElement('a'); link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); link.download = 'hacsa-registration-report.csv'; link.click(); URL.revokeObjectURL(link.href); showToast('Registration report downloaded'); });
+    const currencyWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    while (currencyWalker.nextNode()) currencyWalker.currentNode.nodeValue = currencyWalker.currentNode.nodeValue.replace(/GHâ‚µ/g, 'GH₵');
+    document.querySelector('#mobileMenu').addEventListener('click', () => document.querySelector('#sidebar').classList.toggle('open'));
+  </script>
+</body>
+</html>
