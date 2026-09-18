@@ -28,7 +28,9 @@ router = APIRouter(tags=["Participant & Speaker Profiles"])
 
 @router.get("/participants", response_model=List[UserOut])
 def list_participants(
-    current_user: User = Depends(require_roles(RoleEnum.organiser, RoleEnum.ops_lead)),
+    current_user: User = Depends(
+        require_roles(RoleEnum.organiser, RoleEnum.ops_lead, RoleEnum.staff, RoleEnum.safety_officer)
+    ),
     db: DBSession = Depends(get_db),
 ):
     return list_users(db)

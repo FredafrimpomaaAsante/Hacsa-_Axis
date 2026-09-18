@@ -412,6 +412,41 @@ tr:last-child td { border-bottom: 0; }
   color: var(--muted);
 }
 
+.ops-notice {
+  margin: 0;
+  min-height: 1.2em;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.ops-notice.error { color: var(--danger); }
+.ops-notice.ok { color: var(--success); }
+
+.venue-actions,
+.inline-actions,
+.table-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.table-actions { margin-top: 0; }
+
+.ghost-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 10px;
+  min-height: 32px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ghost-btn:hover { border-color: var(--gold); color: var(--gold); }
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

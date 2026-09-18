@@ -37,6 +37,7 @@
         <h1>Command Center</h1>
         <p>Watch occupancy, check-ins and alerts as they happen across the HACSA Axis venues.</p>
       </div>
+      <p id="opsNotice" class="ops-notice"></p>
     </section>
 
     <main class="page-content">
@@ -74,6 +75,25 @@
 
         <section class="panel">
           <div class="panel-header">
+            <h2 class="panel-title">Check a guest in</h2>
+          </div>
+          <form id="checkinForm">
+            <div class="field">
+              <label for="checkinGuest">Guest</label>
+              <select id="checkinGuest" required>
+                <option value="">Select a guest</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="checkinMethod">Method</label>
+              <select id="checkinMethod">
+                <option value="qr_scan">QR scan</option>
+                <option value="manual">Manual override</option>
+              </select>
+            </div>
+            <button type="submit" class="primary-btn">Check in</button>
+          </form>
+          <div class="panel-header" style="margin-top: 22px;">
             <h2 class="panel-title">Recent check-ins</h2>
           </div>
           <div class="table-wrap">
@@ -104,6 +124,7 @@
   <script src="/js/api.js"></script>
   <script src="/js/auth-gate.js"></script>
   <script src="theme.js"></script>
+  <script src="live.js"></script>
   <script src="command-center.js"></script>
 </body>
 </html>

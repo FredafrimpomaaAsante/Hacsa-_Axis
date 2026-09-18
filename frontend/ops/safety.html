@@ -37,6 +37,7 @@
         <h1>Incident desk</h1>
         <p>Log cases, assign a response, and keep a clear view of what is still open on the floor.</p>
       </div>
+      <p id="opsNotice" class="ops-notice"></p>
     </section>
 
     <main class="page-content">
@@ -110,10 +111,7 @@
             <div class="field">
               <label for="assignedTo">Assigned to</label>
               <select id="assignedTo" name="assignedTo">
-                <option value="A. Chen">A. Chen</option>
-                <option value="M. Patel">M. Patel</option>
-                <option value="D. Brooks">D. Brooks</option>
-                <option value="N. Singh">N. Singh</option>
+                <option value="">Unassigned</option>
               </select>
             </div>
 
@@ -125,12 +123,7 @@
           <div class="panel-header">
             <h2 class="panel-title">Venue safety indicators</h2>
           </div>
-          <ul class="alert-list">
-            <li class="alert-item info">Fire exits clear and visibly marked</li>
-            <li class="alert-item info">Medical station ready with supplies</li>
-            <li class="alert-item warning">Queue lane at Gate 3 under watch</li>
-            <li class="alert-item info">Security sweep completed in workshop zones</li>
-          </ul>
+          <ul id="safetyIndicators" class="alert-list"></ul>
         </aside>
       </div>
 
@@ -147,10 +140,10 @@
             </select>
             <select id="statusFilter" class="secondary-btn" aria-label="Filter by status">
               <option value="All">All status</option>
-              <option value="Open">Open</option>
-              <option value="Monitoring">Monitoring</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Resolved">Resolved</option>
+              <option value="open">Open</option>
+              <option value="assigned">Assigned</option>
+              <option value="in_progress">In progress</option>
+              <option value="resolved">Resolved</option>
             </select>
           </div>
         </div>
@@ -166,6 +159,7 @@
                 <th>Status</th>
                 <th>Assigned to</th>
                 <th>Time</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="incidentTableBody"></tbody>
@@ -178,6 +172,7 @@
   <script src="/js/api.js"></script>
   <script src="/js/auth-gate.js"></script>
   <script src="theme.js"></script>
+  <script src="live.js"></script>
   <script src="safety.js"></script>
 </body>
 </html>
