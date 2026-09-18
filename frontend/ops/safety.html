@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safety &amp; Incident Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="ops-header">
+      <div class="ops-brand">
+        <span class="ops-mark">HA</span>
+        <div>
+          <strong>HACSA AXIS</strong>
+          <span>Live operations</span>
+        </div>
+      </div>
+      <nav class="ops-nav" aria-label="Operations">
+        <a href="index.html">Overview</a>
+        <a href="command-center.html">Command Center</a>
+        <a class="active" href="safety.html">Safety</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <div class="ops-tools">
+        <span class="live-pill">Live</span>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+        <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div>
+        <p class="eyebrow">SAFETY</p>
+        <h1>Incident desk</h1>
+        <p>Log cases, assign a response, and keep a clear view of what is still open on the floor.</p>
+      </div>
+    </section>
+
+    <main class="page-content">
+      <section class="summary-strip">
+        <div class="metric-box">
+          <span class="card-label">Open cases</span>
+          <strong id="openCases">0</strong>
+          <span class="card-meta">Need a response</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Resolved</span>
+          <strong id="resolvedCases">0</strong>
+          <span class="card-meta">Closed this event</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Critical</span>
+          <strong id="criticalCases">0</strong>
+          <span class="card-meta">Highest severity</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Avg. response</span>
+          <strong id="avgResponse">0m</strong>
+          <span class="card-meta">Time to first action</span>
+        </div>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Create incident report</h2>
+          </div>
+
+          <form id="incidentForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="title">Title</label>
+                <input id="title" name="title" type="text" placeholder="Stage power issue" required />
+              </div>
+              <div class="field">
+                <label for="location">Location</label>
+                <input id="location" name="location" type="text" placeholder="Main Hall" required />
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="field">
+                <label for="severity">Severity</label>
+                <select id="severity" name="severity">
+                  <option value="Low">Low</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="High">High</option>
+                  <option value="Critical">Critical</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="type">Type</label>
+                <select id="type" name="type">
+                  <option value="Safety">Safety</option>
+                  <option value="Security">Security</option>
+                  <option value="Medical">Medical</option>
+                  <option value="Facility">Facility</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="description">Description</label>
+              <textarea id="description" name="description" placeholder="Summarize what happened and immediate action taken." required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="assignedTo">Assigned to</label>
+              <select id="assignedTo" name="assignedTo">
+                <option value="A. Chen">A. Chen</option>
+                <option value="M. Patel">M. Patel</option>
+                <option value="D. Brooks">D. Brooks</option>
+                <option value="N. Singh">N. Singh</option>
+              </select>
+            </div>
+
+            <button type="submit" class="primary-btn">Submit incident</button>
+          </form>
+        </section>
+
+        <aside class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Venue safety indicators</h2>
+          </div>
+          <ul class="alert-list">
+            <li class="alert-item info">Fire exits clear and visibly marked</li>
+            <li class="alert-item info">Medical station ready with supplies</li>
+            <li class="alert-item warning">Queue lane at Gate 3 under watch</li>
+            <li class="alert-item info">Security sweep completed in workshop zones</li>
+          </ul>
+        </aside>
+      </div>
+
+      <section class="table-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Incident history</h2>
+          <div class="ops-tools">
+            <select id="severityFilter" class="secondary-btn" aria-label="Filter by severity">
+              <option value="All">All severity</option>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Critical">Critical</option>
+            </select>
+            <select id="statusFilter" class="secondary-btn" aria-label="Filter by status">
+              <option value="All">All status</option>
+              <option value="Open">Open</option>
+              <option value="Monitoring">Monitoring</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Assigned to</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="incidentTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth-gate.js"></script>
+  <script src="theme.js"></script>
+  <script src="safety.js"></script>
+</body>
+</html>

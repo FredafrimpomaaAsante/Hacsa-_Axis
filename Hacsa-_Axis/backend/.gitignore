@@ -1,8 +1,0 @@
-.env
-*.db
-venv/
-.venv/
-__pycache__/
-*.py[cod]
-node_modules/
-dist/

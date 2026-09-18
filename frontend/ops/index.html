@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HACSA AXIS | Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="ops-header">
+      <div class="ops-brand">
+        <span class="ops-mark">HA</span>
+        <div>
+          <strong>HACSA AXIS</strong>
+          <span>Live operations</span>
+        </div>
+      </div>
+      <nav class="ops-nav" aria-label="Operations">
+        <a class="active" href="index.html">Overview</a>
+        <a href="command-center.html">Command Center</a>
+        <a href="safety.html">Safety</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <div class="ops-tools">
+        <span class="live-pill">Live</span>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+        <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div>
+        <p class="eyebrow">OPERATIONS</p>
+        <h1>Overview</h1>
+        <p>A calm snapshot of attendance, venue load and the actions that need attention.</p>
+      </div>
+    </section>
+
+    <main class="page-content">
+      <section class="summary-strip">
+        <article class="metric-box">
+          <span class="card-label">Attendance</span>
+          <strong id="overviewAttendance">—</strong>
+          <span class="card-meta">Registered guests</span>
+        </article>
+        <article class="metric-box">
+          <span class="card-label">Check-ins</span>
+          <strong id="overviewCheckins">—</strong>
+          <span class="card-meta">Live feed</span>
+        </article>
+        <article class="metric-box">
+          <span class="card-label">Occupancy</span>
+          <strong id="overviewOccupancy">—</strong>
+          <span class="card-meta">Venue utilisation</span>
+        </article>
+        <article class="metric-box">
+          <span class="card-label">Incidents</span>
+          <strong id="overviewIncidents">—</strong>
+          <span class="card-meta">Open safety cases</span>
+        </article>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Live venue status</h2>
+            <span class="live-badge">Live</span>
+          </div>
+          <div id="overviewVenues" class="venue-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Priority actions</h2>
+          </div>
+          <ul id="overviewAlerts" class="alert-list"></ul>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth-gate.js"></script>
+  <script src="theme.js"></script>
+  <script src="overview.js"></script>
+</body>
+</html>

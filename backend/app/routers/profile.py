@@ -9,6 +9,7 @@ from app.schemas.user import (
     ParticipantProfileUpdate,
     SpeakerProfileOut,
     SpeakerProfileUpdate,
+    UserOut,
 )
 from app.services import (
     get_participant_profile,
@@ -17,11 +18,20 @@ from app.services import (
     update_speaker_profile,
     get_speaker_profile_by_code,
     list_speaker_profiles,
+    list_users,
 )
 from app.utils import require_roles
 from app.models.user import User, RoleEnum
 
 router = APIRouter(tags=["Participant & Speaker Profiles"])
+
+
+@router.get("/participants", response_model=List[UserOut])
+def list_participants(
+    current_user: User = Depends(require_roles(RoleEnum.organiser, RoleEnum.ops_lead)),
+    db: DBSession = Depends(get_db),
+):
+    return list_users(db)
 
 
 @router.get("/participants/me", response_model=ParticipantProfileOut)
@@ -50,7 +60,12 @@ def edit_my_participant_profile(
 @router.get("/speakers", response_model=List[SpeakerProfileOut])
 def list_speakers(db: DBSession = Depends(get_db)):
     """Public speaker directory."""
-    return list_speaker_profiles(db)
+    profiles = []
+    for profile in list_speaker_profiles(db):
+        item = SpeakerProfileOut.model_validate(profile)
+        item.full_name = profile.user.full_name if profile.user else profile.title
+        profiles.append(item)
+    return profiles
 
 
 @router.get("/speakers/me", response_model=SpeakerProfileOut)

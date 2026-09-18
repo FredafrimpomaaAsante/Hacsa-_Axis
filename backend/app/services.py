@@ -52,11 +52,12 @@ def create_user(db: DBSession, user_in: UserCreate) -> User:
         if speaker_profile.user_id is not None:
             raise ValueError("Speaker ID has already been claimed")
 
+    role = RoleEnum.speaker if speaker_profile else (user_in.role or RoleEnum.participant)
     user = User(
         full_name=user_in.full_name,
         email=user_in.email,
         hashed_password=hash_password(user_in.password),
-        role=RoleEnum.speaker if speaker_profile else RoleEnum.participant,
+        role=role,
     )
 
     db.add(user)
@@ -512,10 +513,11 @@ def create_unclaimed_speaker_profile(
 ) -> SpeakerProfile:
     profile = SpeakerProfile(
         speaker_code=generate_speaker_code(),
-        title=data.title,
+        title=data.full_name or data.title,
         organization=data.organization,
         bio=data.bio,
-        expertise=data.expertise,
+        expertise=data.expertise or data.title,
+        photo_url=data.photo_url,
     )
 
     db.add(profile)

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="ops-header">
+      <div class="ops-brand">
+        <span class="ops-mark">HA</span>
+        <div>
+          <strong>HACSA AXIS</strong>
+          <span>Live operations</span>
+        </div>
+      </div>
+      <nav class="ops-nav" aria-label="Operations">
+        <a href="index.html">Overview</a>
+        <a class="active" href="command-center.html">Command Center</a>
+        <a href="safety.html">Safety</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <div class="ops-tools">
+        <span class="live-pill">Live</span>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+        <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div>
+        <p class="eyebrow">OPERATIONS</p>
+        <h1>Command Center</h1>
+        <p>Watch occupancy, check-ins and alerts as they happen across the HACSA Axis venues.</p>
+      </div>
+    </section>
+
+    <main class="page-content">
+      <section class="kpi-grid">
+        <article class="card">
+          <span class="card-label">Registered</span>
+          <p id="totalRegistered" class="card-value">—</p>
+          <span class="card-meta">People on the programme list</span>
+        </article>
+        <article class="card">
+          <span class="card-label">Checked in</span>
+          <p id="checkedInCount" class="card-value">—</p>
+          <span class="card-meta">Live attendance feed</span>
+        </article>
+        <article class="card">
+          <span class="card-label">Occupancy</span>
+          <p id="occupancyValue" class="card-value">—</p>
+          <span class="card-meta">Across active venues</span>
+        </article>
+        <article class="card">
+          <span class="card-label">Staff on duty</span>
+          <p id="staffCount" class="card-value">—</p>
+          <span class="card-meta">Operations and safety teams</span>
+        </article>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Venue occupancy</h2>
+            <span class="live-badge">Live</span>
+          </div>
+          <div id="venueGrid" class="venue-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Recent check-ins</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Guest</th>
+                  <th>Gate</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="checkinBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Current alerts</h2>
+        </div>
+        <ul id="alertsList" class="alert-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth-gate.js"></script>
+  <script src="theme.js"></script>
+  <script src="command-center.js"></script>
+</body>
+</html>
