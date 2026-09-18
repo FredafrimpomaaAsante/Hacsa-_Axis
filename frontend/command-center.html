@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations Command Center</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <span class="brand-mark"></span>
+        <div class="brand-title">OpsHub</div>
+      </div>
+
+      <h1 class="page-title">Operations Command Center</h1>
+
+      <div class="topbar-actions">
+        <button class="secondary-btn" type="button" onclick="window.location.href='safety.html'">Safety</button>
+        <button class="secondary-btn" type="button" onclick="window.location.href='analytics.html'">Analytics</button>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <section class="kpi-grid">
+        <article class="card">
+          <span class="card-label">Total Registered</span>
+          <p id="totalRegistered" class="card-value">0</p>
+          <span class="card-meta">+12 since yesterday</span>
+        </article>
+
+        <article class="card">
+          <span class="card-label">Checked-In</span>
+          <p id="checkedInCount" class="card-value">0</p>
+          <span class="card-meta">Live feed</span>
+        </article>
+
+        <article class="card">
+          <span class="card-label">Venue Occupancy</span>
+          <p id="occupancyValue" class="card-value">0%</p>
+          <span class="card-meta">Safe operating band</span>
+        </article>
+
+        <article class="card">
+          <span class="card-label">Staff On-Duty</span>
+          <p id="staffCount" class="card-value">0</p>
+          <span class="card-meta">All teams active</span>
+        </article>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Venue Occupancy</h2>
+            <span class="live-badge">Live</span>
+          </div>
+          <div id="venueGrid" class="venue-grid"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Recent Check-Ins</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Gate</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="checkinBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Current Alerts</h2>
+        </div>
+        <ul id="alertsList" class="alert-list"></ul>
+      </section>
+    </main>
+  </div>
+
+  <script src="theme.js"></script>
+  <script src="command-center.js"></script>
+</body>
+</html>

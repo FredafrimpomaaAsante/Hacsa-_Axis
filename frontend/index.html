@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HACSA AXIS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <span class="brand-mark"></span>
+        <div class="brand-title">OpsHub for hacsa axis</div>
+      </div>
+
+      <h1 class="page-title">Operations Command Center</h1>
+
+      <div class="topbar-actions">
+        <button class="secondary-btn" type="button" onclick="window.location.href='command-center.html'">Command Center</button>
+        <button class="secondary-btn" type="button" onclick="window.location.href='safety.html'">Safety</button>
+        <button class="secondary-btn" type="button" onclick="window.location.href='analytics.html'">Analytics</button>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <section class="summary-strip">
+        <article class="metric-box">
+          <span class="card-label">Attendance</span>
+          <strong>2,480</strong>
+          <span class="card-meta">+6.4% vs target</span>
+        </article>
+
+        <article class="metric-box">
+          <span class="card-label">Check-Ins</span>
+          <strong>1,942</strong>
+          <span class="card-meta">Live feed</span>
+        </article>
+
+        <article class="metric-box">
+          <span class="card-label">Occupancy</span>
+          <strong>82%</strong>
+          <span class="card-meta">Within safe threshold</span>
+        </article>
+
+        <article class="metric-box">
+          <span class="card-label">Incidents</span>
+          <strong>03</strong>
+          <span class="card-meta">2 resolved today</span>
+        </article>
+      </section>
+
+      <div class="main-grid">
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Live Venue Status</h2>
+            <span class="live-badge">Live</span>
+          </div>
+
+          <div class="venue-grid">
+            <article class="venue-card">
+              <div class="venue-row">
+                <span>Main Entrance</span>
+                <strong>75%</strong>
+              </div>
+              <div class="venue-progress"><div class="venue-progress-bar green" style="width: 75%"></div></div>
+            </article>
+
+            <article class="venue-card">
+              <div class="venue-row">
+                <span>Exhibition Hall</span>
+                <strong>86%</strong>
+              </div>
+              <div class="venue-progress"><div class="venue-progress-bar yellow" style="width: 86%"></div></div>
+            </article>
+
+            <article class="venue-card">
+              <div class="venue-row">
+                <span>VIP Lounge</span>
+                <strong>52%</strong>
+              </div>
+              <div class="venue-progress"><div class="venue-progress-bar green" style="width: 52%"></div></div>
+            </article>
+
+            <article class="venue-card">
+              <div class="venue-row">
+                <span>Loading Bay</span>
+                <strong>68%</strong>
+              </div>
+              <div class="venue-progress"><div class="venue-progress-bar yellow" style="width: 68%"></div></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <h2 class="panel-title">Priority Actions</h2>
+          </div>
+
+          <ul class="alert-list">
+            <li class="alert-item info">
+              Staffing coverage is balanced across all active venues.
+            </li>
+            <li class="alert-item warning">
+              One back-up checkpoint is approaching congestion thresholds.
+            </li>
+            <li class="alert-item critical">
+              Incident response team has been assigned to the west loading dock.
+            </li>
+          </ul>
+        </section>
+      </div>
+
+      <section class="table-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Recent Activity</h2>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Task</th>
+                <th>Location</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Security</td>
+                <td>Gate scan audit</td>
+                <td>Main Entrance</td>
+                <td><span class="badge success">On Track</span></td>
+              </tr>
+              <tr>
+                <td>Logistics</td>
+                <td>Equipment reset</td>
+                <td>Loading Bay</td>
+                <td><span class="badge warning">Monitoring</span></td>
+              </tr>
+              <tr>
+                <td>Medical</td>
+                <td>Rapid response check</td>
+                <td>North Hall</td>
+                <td><span class="badge success">Resolved</span></td>
+              </tr>
+              <tr>
+                <td>Operations</td>
+                <td>Queue optimization</td>
+                <td>VIP Lounge</td>
+                <td><span class="badge danger">Priority</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="theme.js"></script>
+</body>
+</html>
