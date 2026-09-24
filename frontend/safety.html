@@ -86,16 +86,6 @@
               <textarea id="description" name="description" placeholder="Summarize what happened and immediate action taken." required></textarea>
             </div>
 
-            <div class="field">
-              <label for="assignedTo">Assigned To</label>
-              <select id="assignedTo" name="assignedTo">
-                <option value="A. Chen">A. Chen</option>
-                <option value="M. Patel">M. Patel</option>
-                <option value="D. Brooks">D. Brooks</option>
-                <option value="N. Singh">N. Singh</option>
-              </select>
-            </div>
-
             <button type="submit" class="primary-btn">Submit Incident</button>
           </form>
         </section>
@@ -145,8 +135,9 @@
                 <th>Location</th>
                 <th>Severity</th>
                 <th>Status</th>
-                <th>Assigned To</th>
-                <th>Time</th>
+                <th>Assigned Team</th>
+                <th>Time / SLA</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="incidentTableBody"></tbody>
