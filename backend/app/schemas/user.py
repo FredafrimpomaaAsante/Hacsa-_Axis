@@ -10,6 +10,7 @@ class UserCreate(BaseModel):
     full_name: str
     email: EmailStr
     password: str
+    role: RoleEnum = RoleEnum.participant
     speaker_code: Optional[str] = None
 
 
@@ -22,7 +23,7 @@ class UserOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: int
-    person_id:str
+    person_id: str
     full_name: str
     email: EmailStr
     role: RoleEnum
@@ -32,6 +33,7 @@ class UserOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+    user: UserOut
 
 
 class ParticipantProfileUpdate(BaseModel):
@@ -66,17 +68,21 @@ class SpeakerProfileOut(BaseModel):
     id: int
     user_id: Optional[int] = None
     speaker_code: str
+    full_name: Optional[str] = None
     title: Optional[str] = None
     organization: Optional[str] = None
     bio: Optional[str] = None
     photo_url: Optional[str] = None
     expertise: Optional[str] = None
 
+
 class SpeakerProfileCreate(BaseModel):
+    full_name: Optional[str] = None
     title: Optional[str] = None
     organization: Optional[str] = None
     bio: Optional[str] = None
     expertise: Optional[str] = None
+    photo_url: Optional[str] = None
 
 
 class SpeakerLink(BaseModel):

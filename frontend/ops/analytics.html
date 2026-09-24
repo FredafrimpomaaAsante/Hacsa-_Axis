@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Operations Analytics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-theme="dark">
+  <div class="app-shell">
+    <header class="ops-header">
+      <div class="ops-brand">
+        <span class="ops-mark">HA</span>
+        <div>
+          <strong>HACSA AXIS</strong>
+          <span>Live operations</span>
+        </div>
+      </div>
+      <nav class="ops-nav" aria-label="Operations">
+        <a href="index.html">Overview</a>
+        <a href="command-center.html">Command Center</a>
+        <a href="safety.html">Safety</a>
+        <a class="active" href="analytics.html">Analytics</a>
+      </nav>
+      <div class="ops-tools">
+        <span class="live-pill">Live</span>
+        <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
+        <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <section class="page-hero">
+      <div>
+        <p class="eyebrow">INSIGHTS</p>
+        <h1>Analytics</h1>
+        <p>Check-in pace, wait time and venue throughput for the current HACSA Axis programme.</p>
+      </div>
+      <p id="opsNotice" class="ops-notice"></p>
+    </section>
+
+    <main class="page-content">
+      <section class="summary-strip">
+        <div class="metric-box">
+          <span class="card-label">Check-ins</span>
+          <strong id="analyticsCheckins">0</strong>
+          <span class="card-meta">Arrivals recorded</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Avg. response</span>
+          <strong id="analyticsWait">0m</strong>
+          <span class="card-meta">Incident to resolve</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Busiest zone</span>
+          <strong id="analyticsThroughput">0%</strong>
+          <span class="card-meta">Highest utilisation</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Team load</span>
+          <strong id="analyticsStaff">0%</strong>
+          <span class="card-meta">Open work vs staff</span>
+        </div>
+      </section>
+      <section class="summary-strip">
+        <div class="metric-box">
+          <span class="card-label">Rejected scans</span>
+          <strong id="analyticsRejected">0</strong>
+          <span class="card-meta">Duplicate or failed passes</span>
+        </div>
+        <div class="metric-box">
+          <span class="card-label">Open incidents</span>
+          <strong id="analyticsOpenIncidents">0</strong>
+          <span class="card-meta">Still on the floor</span>
+        </div>
+      </section>
+
+      <section class="chart-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Check-ins per hour</h2>
+          <span class="live-badge">Updated</span>
+        </div>
+        <div id="barChart" class="bar-chart"></div>
+      </section>
+
+      <section class="panel" style="margin-top: 18px;">
+        <div class="panel-header">
+          <h2 class="panel-title">Zone utilisation</h2>
+        </div>
+        <div id="analyticsZones" class="venue-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth-gate.js"></script>
+  <script src="theme.js"></script>
+  <script src="live.js"></script>
+  <script src="analytics.js"></script>
+</body>
+</html>

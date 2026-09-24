@@ -1,7 +1,4 @@
-"""
-App settings, all read from environment variables — nothing here is
-hardcoded. Copy .env.example to .env and fill in real values.
-"""
+"""Environment-driven settings for the unified HACSA Axis API."""
 
 import os
 
@@ -9,12 +6,43 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-SECRET_KEY = os.getenv("SECRET_KEY")
-if not SECRET_KEY:
-    raise RuntimeError(
-        "SECRET_KEY is not set. Copy .env.example to .env and set a real secret key."
-    )
-
+SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-change-me")
 ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
-ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "720"))
+DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./hacsa.db")
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv("CORS_ORIGINS", "http://127.0.0.1:8000,http://localhost:8000").split(",")
+    if origin.strip()
+]
+DEFAULT_EVENT_ID = os.getenv("DEFAULT_EVENT_ID", "summit-2026")
+APP_NAME = os.getenv("APP_NAME", "HACSA Axis")
+API_V1_PREFIX = "/api/v1"
 
+OCCUPANCY_ELEVATED_THRESHOLD = float(os.getenv("OCCUPANCY_ELEVATED_THRESHOLD", "0.85"))
+OCCUPANCY_CRITICAL_THRESHOLD = float(os.getenv("OCCUPANCY_CRITICAL_THRESHOLD", "0.98"))
+ESCALATION_MINUTES_CRITICAL = int(os.getenv("ESCALATION_MINUTES_CRITICAL", "5"))
+ESCALATION_MINUTES_HIGH = int(os.getenv("ESCALATION_MINUTES_HIGH", "10"))
+ESCALATION_MINUTES_MEDIUM = int(os.getenv("ESCALATION_MINUTES_MEDIUM", "25"))
+ESCALATION_MINUTES_LOW = int(os.getenv("ESCALATION_MINUTES_LOW", "40"))
+
+
+class Settings:
+    SECRET_KEY = SECRET_KEY
+    JWT_SECRET_KEY = SECRET_KEY
+    JWT_ALGORITHM = ALGORITHM
+    ACCESS_TOKEN_EXPIRE_MINUTES = ACCESS_TOKEN_EXPIRE_MINUTES
+    DATABASE_URL = DATABASE_URL
+    CORS_ORIGINS = CORS_ORIGINS
+    DEFAULT_EVENT_ID = DEFAULT_EVENT_ID
+    APP_NAME = APP_NAME
+    API_V1_PREFIX = API_V1_PREFIX
+    OCCUPANCY_ELEVATED_THRESHOLD = OCCUPANCY_ELEVATED_THRESHOLD
+    OCCUPANCY_CRITICAL_THRESHOLD = OCCUPANCY_CRITICAL_THRESHOLD
+    ESCALATION_MINUTES_CRITICAL = ESCALATION_MINUTES_CRITICAL
+    ESCALATION_MINUTES_HIGH = ESCALATION_MINUTES_HIGH
+    ESCALATION_MINUTES_MEDIUM = ESCALATION_MINUTES_MEDIUM
+    ESCALATION_MINUTES_LOW = ESCALATION_MINUTES_LOW
+
+
+settings = Settings()
