@@ -1,4 +1,5 @@
 from app.models.user import User, ParticipantProfile, SpeakerProfile, RoleEnum
+from app.models.event_registration import EventRegistration
 from app.models.schedule import Venue, Session, SessionSpeaker, SessionInterest, SessionStatusEnum
 from app.models.notification import Notification
 from app.models.networking import NetworkConnection, ConnectionStatusEnum
@@ -28,6 +29,7 @@ __all__ = [
     "ParticipantProfile",
     "SpeakerProfile",
     "RoleEnum",
+    "EventRegistration",
     "Venue",
     "Session",
     "SessionSpeaker",

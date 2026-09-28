@@ -26,7 +26,8 @@ def browse_directory(
     db: DBSession = Depends(get_db),
 ):
     """Browse other attendees to connect with."""
-    return list_users(db, exclude_user_id=current_user.id)
+    users = list_users(db, exclude_user_id=current_user.id)
+    return [user for user in users if user.is_open_to_connect]
 
 
 @router.post("/connect/{user_id}", response_model=ConnectionRequestOut, status_code=201)

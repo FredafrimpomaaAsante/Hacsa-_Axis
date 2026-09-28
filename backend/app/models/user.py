@@ -2,15 +2,16 @@ import enum
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, String, Text, DateTime, Enum, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, String, Text, DateTime, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 
-from app.connections import Base
+from app.connections import Base, ensure_schema
 
 
 class RoleEnum(str, enum.Enum):
     participant = "participant"
     speaker = "speaker"
+    vendor = "vendor"
     organiser = "organiser"
     staff = "staff"
     safety_officer = "safety_officer"
@@ -30,6 +31,7 @@ class User(Base):
     email = Column(String(250), unique=True, index=True, nullable=False)
     hashed_password = Column(String(500), nullable=False)
     role = Column(Enum(RoleEnum), default=RoleEnum.participant, nullable=False)
+    is_open_to_connect = Column(Boolean, default=True, nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow)
 
     participant_profile = relationship("ParticipantProfile", back_populates="user", uselist=False)
@@ -65,3 +67,6 @@ class SpeakerProfile(Base):
 
     user = relationship("User", back_populates="speaker_profile")
     session_assignments = relationship("SessionSpeaker", back_populates="speaker")
+
+
+ensure_schema()

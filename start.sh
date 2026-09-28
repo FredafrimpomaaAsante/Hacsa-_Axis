@@ -18,6 +18,7 @@ if [ ! -f .env ]; then
   cp .env.example .env
 fi
 
+export PUBLIC_APP_URL="${PUBLIC_APP_URL:-http://10.209.136.101:8000}"
 export PYTHONPATH="$BACKEND"
 python - <<'PY'
 from alembic import command
@@ -34,5 +35,5 @@ with SessionLocal() as db:
 print("Database ready. Demo users: attendee@hacsa.org, speaker@hacsa.org, organiser@hacsa.org, ops@hacsa.org / Axis2026!")
 PY
 
-echo "Starting HACSA Axis at http://127.0.0.1:8000"
-exec python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+echo "Starting HACSA Axis at ${PUBLIC_APP_URL}"
+exec python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000

@@ -1,7 +1,8 @@
 (function () {
   const path = window.location.pathname;
   if (path.includes("/ops/")) requireAuth(["organiser", "staff", "safety_officer", "ops_lead"]);
-  else if (path.includes("/organiser/") || path.includes("/vendor/")) requireAuth(["organiser", "ops_lead"]);
+  else if (path.includes("/organiser/")) requireAuth(["organiser", "ops_lead"]);
+  else if (path.includes("/vendor/")) requireAuth(["vendor"]);
   else if (path.includes("/portal/")) requireAuth(["participant", "speaker"]);
 
   if (path.includes("/organiser/") || path.includes("/vendor/") || path.includes("/ops/")) addWorkspaceSignOut();

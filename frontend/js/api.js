@@ -30,6 +30,7 @@ function isOpsRole(role) {
 
 function destinationFor(role) {
   if (role === "speaker") return "/portal/index.html?role=speaker";
+  if (role === "vendor") return "/vendor/index.html";
   if (role === "organiser") return "/organiser/index.html";
   if (isOpsRole(role)) return "/ops/command-center.html";
   return "/portal/index.html?role=participant";
@@ -64,6 +65,11 @@ async function api(path, options = {}) {
     data = text;
   }
   if (!response.ok) {
+    if (response.status === 401 && token) {
+      clearSession();
+      window.location.replace("/index.html?session=expired");
+      throw new Error("Your session expired. Please sign in again.");
+    }
     const detail = data && data.detail ? data.detail : response.statusText;
     throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
   }

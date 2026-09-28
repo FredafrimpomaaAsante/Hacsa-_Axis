@@ -58,6 +58,7 @@ def create_user(db: DBSession, user_in: UserCreate) -> User:
         email=user_in.email,
         hashed_password=hash_password(user_in.password),
         role=role,
+        is_open_to_connect=user_in.is_open_to_connect,
     )
 
     db.add(user)

@@ -6,7 +6,8 @@
   <title>Operations Command Center</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="style.css?v=urgent-incident-escalation" />
 </head>
 <body data-theme="dark">
   <div class="app-shell">
@@ -14,8 +15,7 @@
       <div class="ops-brand">
         <span class="ops-mark">HA</span>
         <div>
-          <strong>HACSA AXIS</strong>
-          <span>Live operations</span>
+          <strong>HACSA</strong><span>AXIS</span><small>Live operations</small>
         </div>
       </div>
       <nav class="ops-nav" aria-label="Operations">
@@ -26,6 +26,7 @@
       </nav>
       <div class="ops-tools">
         <span class="live-pill">Live</span>
+        <button class="theme-toggle alarm-toggle" id="alarmToggle" type="button" aria-pressed="false">Enable alarm sound</button>
         <button class="theme-toggle" type="button" data-theme-toggle>Light mode</button>
         <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
       </div>
@@ -62,6 +63,40 @@
           <p id="staffCount" class="card-value">—</p>
           <span class="card-meta">Operations and safety teams</span>
         </article>
+      </section>
+
+      <section class="panel event-map-panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">Event center map</h2>
+            <p class="map-intro">Event location, live occupancy, and help requests by area.</p>
+          </div>
+          <span class="live-badge">Live zones</span>
+        </div>
+        <div class="event-map-layout">
+          <div class="event-map-shell">
+            <div id="eventMap" class="event-map" role="application" aria-label="Map showing the HACSA event center"></div>
+            <div class="map-basemap-toggle" role="group" aria-label="Map layer">
+              <button id="mapSatellite" type="button" class="active" aria-pressed="true">Satellite</button>
+              <button id="mapStreets" type="button" aria-pressed="false">Streets</button>
+            </div>
+            <p id="eventMapStatus" class="event-map-status" aria-live="polite">Loading event location…</p>
+          </div>
+          <aside class="event-map-sidebar" aria-label="Event center and live occupancy">
+            <div class="map-site-details">
+              <span class="map-kicker">EVENT CENTER</span>
+              <h3 id="eventCenterName">HACSA Event Center</h3>
+              <p id="eventCenterLocation">Accra, Ghana</p>
+              <span id="eventCenterPrecision" class="map-precision">Approximate location</span>
+            </div>
+            <div class="map-zones-heading"><span>Live zones</span><span id="mapZoneCount">0</span></div>
+            <p id="mapIssueSummary" class="map-issue-summary"><span aria-hidden="true">●</span> No open help signals</p>
+            <ul id="mapZoneList" class="map-zone-list" aria-live="polite">
+              <li class="map-zone-empty">Waiting for occupancy data…</li>
+            </ul>
+            <p class="map-disclaimer">Red badges identify the selected help-request area. Room-level map coordinates are not configured yet.</p>
+          </aside>
+        </div>
       </section>
 
       <div class="main-grid">
@@ -118,13 +153,36 @@
         </div>
         <ul id="alertsList" class="alert-list"></ul>
       </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Recent activity</h2>
+          <span id="activityUpdated" class="card-meta"></span>
+        </div>
+        <ul id="activityList" class="activity-list" aria-live="polite">
+          <li class="activity-empty">Loading activity…</li>
+        </ul>
+      </section>
     </main>
+  </div>
+  <div id="urgentIncidentDialog" class="urgent-incident-overlay" role="alertdialog" aria-modal="true" aria-labelledby="urgentIncidentTitle" hidden>
+    <section class="urgent-incident-card">
+      <div class="urgent-incident-header">
+        <span class="urgent-incident-kicker"><span class="urgent-pulse" aria-hidden="true"></span> Immediate attention</span>
+        <button id="urgentIncidentDismiss" type="button" class="ghost-btn" aria-label="Dismiss urgent alert">Dismiss</button>
+      </div>
+      <h2 id="urgentIncidentTitle">Urgent issue reported</h2>
+      <p id="urgentIncidentSummary">High-priority reports need an immediate response.</p>
+      <ul id="urgentIncidentList" class="urgent-incident-list"></ul>
+      <a class="primary-btn urgent-safety-link" href="safety.html">Open safety queue</a>
+    </section>
   </div>
 
   <script src="/js/api.js"></script>
   <script src="/js/auth-gate.js"></script>
   <script src="theme.js"></script>
   <script src="live.js"></script>
-  <script src="command-center.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="command-center.js?v=urgent-incident-escalation"></script>
 </body>
 </html>

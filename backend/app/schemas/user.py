@@ -12,11 +12,17 @@ class UserCreate(BaseModel):
     password: str
     role: RoleEnum = RoleEnum.participant
     speaker_code: Optional[str] = None
+    organiser_code: Optional[str] = None
+    is_open_to_connect: bool = True
 
 
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+
+class NetworkAvailabilityUpdate(BaseModel):
+    open_to_connect: bool
 
 
 class UserOut(BaseModel):
@@ -27,6 +33,7 @@ class UserOut(BaseModel):
     full_name: str
     email: EmailStr
     role: RoleEnum
+    is_open_to_connect: bool
     created_at: datetime
 
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Verify a HACSA Axis event badge">
+    <title>HACSA Axis | Badge verification</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .verification-page { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--cream); }
+        .verification-panel { width: min(100%, 520px); padding: 32px; background: #fff; border: 1px solid var(--line); border-top: 4px solid var(--green); }
+        .verification-brand { margin-bottom: 26px; }
+        .verification-panel h1 { margin: 0 0 8px; color: var(--green); font-family: 'Playfair Display'; font-size: 30px; }
+        .verification-panel > p { margin: 0 0 26px; color: var(--muted); }
+        .verification-field { padding: 15px 0; border-top: 1px solid var(--line); }
+        .verification-field span { display: block; margin-bottom: 5px; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .verification-field strong { color: var(--ink); font-size: 17px; }
+        .verification-status { display: inline-block; padding: 7px 10px; border-radius: 3px; background: #e6f2e8; color: #205c31 !important; }
+        .verification-status.invalid { background: #fbe9e7; color: #9a2923 !important; }
+        .verification-message { min-height: 20px; margin-top: 16px; color: var(--muted); font-size: 13px; }
+        @media (max-width: 520px) { .verification-panel { padding: 24px 20px; } }
+    </style>
+</head>
+
+<body>
+    <main class="verification-page">
+        <section class="verification-panel" aria-live="polite">
+            <div class="brand verification-brand"><div class="brand-mark">HA</div><div><strong>HACSA</strong><span>AXIS</span></div></div>
+            <span class="tag">HACSA AXIS · 2026</span>
+            <h1>Event badge</h1>
+            <p>Registration status for this badge.</p>
+            <div class="verification-field"><span>Name</span><strong id="badgeName">Checking badge…</strong></div>
+            <div class="verification-field"><span>Access ID</span><strong id="accessId">—</strong></div>
+            <div class="verification-field"><span>Event</span><strong id="eventName">Checking…</strong></div>
+            <div class="verification-field"><span>Event registration</span><strong id="registrationStatus">Checking…</strong></div>
+            <div class="verification-message" id="message"></div>
+        </section>
+    </main>
+    <script>
+        (async function () {
+            const personId = new URLSearchParams(window.location.search).get('person_id');
+            const name = document.getElementById('badgeName');
+            const accessId = document.getElementById('accessId');
+            const eventName = document.getElementById('eventName');
+            const status = document.getElementById('registrationStatus');
+            const message = document.getElementById('message');
+            if (!personId) {
+                name.textContent = 'Not available';
+                accessId.textContent = '—';
+                eventName.textContent = 'No event registered';
+                status.textContent = 'No event registered';
+                status.classList.add('verification-status', 'invalid');
+                message.textContent = 'This badge link is missing its registration identifier.';
+                return;
+            }
+            try {
+                const response = await fetch(`/badges/verify/${encodeURIComponent(personId)}`);
+                if (!response.ok) throw new Error('Badge could not be verified.');
+                const badge = await response.json();
+                name.textContent = badge.full_name || 'Not available';
+                accessId.textContent = badge.access_id;
+                eventName.textContent = badge.event_name || 'No event registered';
+                const eventLabel = badge.event_name || 'No event registered';
+                status.textContent = badge.registered ? `Registered for ${eventLabel}` : 'No event registered';
+                status.classList.add('verification-status');
+                if (!badge.registered) status.classList.add('invalid');
+                message.textContent = badge.registered
+                    ? 'This name and access ID match a saved event registration.'
+                    : 'No saved registration exists for this person.';
+            } catch (error) {
+                name.textContent = 'Not available';
+                accessId.textContent = '—';
+                eventName.textContent = 'No event registered';
+                status.textContent = 'Unable to verify';
+                status.classList.add('verification-status', 'invalid');
+                message.textContent = 'The verification service is unavailable. Try again when the event site is online.';
+            }
+        })();
+    </script>
+</body>
+
+</html>

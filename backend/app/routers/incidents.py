@@ -8,12 +8,18 @@ from app.connections import get_db
 from app.models.safety import (
     Incident,
     ResponseAssignment,
+    SafetyAlert,
 )
 
 from app.models.enums import (
+    AlertLevel,
+    AlertType,
+    EscalationLevel,
+    IncidentSeverity,
     IncidentStatus,
     AuditAction,
 )
+from app.models.user import RoleEnum
 
 from app.schemas.safety import (
     IncidentCreate,
@@ -47,9 +53,18 @@ async def report_incident(
     payload: IncidentCreate,
     db: Session = Depends(get_db),
     user: CurrentUser = Depends(
-        require_roles(*OPS_ROLES)
+        require_roles(
+            *OPS_ROLES,
+            RoleEnum.participant,
+            RoleEnum.speaker,
+            RoleEnum.vendor,
+        )
     )
 ):
+    is_medical = "medical" in " ".join(
+        value or "" for value in (payload.title, payload.description)
+    ).lower()
+    severity = IncidentSeverity.CRITICAL if is_medical else payload.severity
     description = payload.description
     if payload.title:
         description = f"{payload.title}: {payload.description}"
@@ -59,7 +74,7 @@ async def report_incident(
         reported_by=user.id,
         location=payload.location,
         description=description,
-        severity=payload.severity
+        severity=severity
     )
 
     db.add(incident)
@@ -75,14 +90,35 @@ async def report_incident(
         detail="Incident reported"
     )
 
+    if severity in {IncidentSeverity.HIGH, IncidentSeverity.CRITICAL}:
+        medical_alert = is_medical
+        alert = SafetyAlert(
+            event_id=incident.event_id,
+            alert_type=AlertType.MEDICAL if medical_alert else AlertType.INCIDENT,
+            level=AlertLevel.CRITICAL if severity == IncidentSeverity.CRITICAL else AlertLevel.ELEVATED,
+            escalation_level=EscalationLevel.OPERATIONS_LEAD,
+            zone_name=incident.location,
+            incident_id=incident.id,
+            message=(
+                f"Immediate attention: {incident.description} · {incident.location}"
+            )[:255],
+            created_by=user.id,
+        )
+        db.add(alert)
+        db.commit()
+
     await manager.broadcast({
         "type": "incident_created",
         "event_id": incident.event_id,
         "incident_id": incident.id,
         "severity": incident.severity.value,
         "location": incident.location,
+        "title": payload.title or "Issue reported",
+        "description": payload.description,
+        "reported_by": user.id,
+        "urgent": severity in {IncidentSeverity.HIGH, IncidentSeverity.CRITICAL},
         "status": incident.status.value,
-        "message": "New incident reported"
+        "message": "Immediate attention required" if severity in {IncidentSeverity.HIGH, IncidentSeverity.CRITICAL} else "New incident reported"
     })
 
     return incident
@@ -236,13 +272,7 @@ async def update_incident_status(
     incident_id: int,
     payload: IncidentUpdateStatus,
     db: Session = Depends(get_db),
-    user: CurrentUser = Depends(
-        require_roles(
-            "safety_officer",
-            "ops_lead",
-            "organiser",
-        )
-    )
+    user: CurrentUser = Depends(require_roles(*OPS_ROLES))
 ):
     incident = db.query(Incident).filter(
         Incident.id == incident_id
@@ -266,6 +296,9 @@ async def update_incident_status(
     ]:
         if not incident.resolved_at:
             incident.resolved_at = datetime.utcnow()
+        for alert in incident.alerts:
+            alert.resolved = True
+            alert.resolved_at = incident.resolved_at
 
     db.commit()
     db.refresh(incident)

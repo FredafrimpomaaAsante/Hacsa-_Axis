@@ -10,6 +10,7 @@ from app.schemas.user import (
     SpeakerProfileOut,
     SpeakerProfileUpdate,
     UserOut,
+    NetworkAvailabilityUpdate,
 )
 from app.services import (
     get_participant_profile,
@@ -34,6 +35,18 @@ def list_participants(
     db: DBSession = Depends(get_db),
 ):
     return list_users(db)
+
+
+@router.patch("/me/network-availability", response_model=UserOut)
+def update_network_availability(
+    data: NetworkAvailabilityUpdate,
+    current_user: User = Depends(require_roles(RoleEnum.participant, RoleEnum.speaker)),
+    db: DBSession = Depends(get_db),
+):
+    current_user.is_open_to_connect = data.open_to_connect
+    db.commit()
+    db.refresh(current_user)
+    return current_user
 
 
 @router.get("/participants/me", response_model=ParticipantProfileOut)

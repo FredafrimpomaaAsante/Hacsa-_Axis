@@ -23,6 +23,24 @@ router = APIRouter(
 
 
 @router.get(
+    "/activity",
+    response_model=list[AuditLogOut],
+)
+def recent_activity(
+    limit: int = Query(30, ge=1, le=100),
+    db: Session = Depends(get_db),
+    user: CurrentUser = Depends(require_roles(*OPS_ROLES)),
+):
+    return (
+        db.query(AuditLog)
+        .filter(AuditLog.entity_type != "audit_log")
+        .order_by(AuditLog.created_at.desc())
+        .limit(limit)
+        .all()
+    )
+
+
+@router.get(
     "/logs",
     response_model=list[AuditLogOut]
 )
