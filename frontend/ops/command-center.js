@@ -9,16 +9,30 @@ var eventCenterBaseLayer = "satellite";
 var announcedUrgentIncidents = new Set();
 var urgentAudioContext = null;
 var urgentAlarmEnabled = false;
+var opsRefreshPromise = null;
+var opsRefreshQueued = false;
 
 async function loadOpsState() {
-  var id = await eventId();
-  var appConfig = await api("/api/config");
-  var overview = await api("/api/v1/analytics/overview?event_id=" + id);
-  var zones = await api("/api/v1/occupancy/zones?event_id=" + id);
-  var checkins = await api("/api/v1/attendance/check-ins?event_id=" + id);
-  var alerts = await api("/api/v1/alerts/?event_id=" + id);
-  var incidents = await api("/api/v1/incidents/?event_id=" + id);
-  var people = await api("/participants");
+  var initialData = await Promise.all([
+    eventId(),
+    api("/api/config"),
+  ]);
+  var id = initialData[0];
+  var appConfig = initialData[1];
+  var data = await Promise.all([
+    api("/api/v1/analytics/overview?event_id=" + id),
+    api("/api/v1/occupancy/zones?event_id=" + id),
+    api("/api/v1/attendance/check-ins?event_id=" + id),
+    api("/api/v1/alerts/?event_id=" + id),
+    api("/api/v1/incidents/?event_id=" + id),
+    api("/participants"),
+  ]);
+  var overview = data[0];
+  var zones = data[1];
+  var checkins = data[2];
+  var alerts = data[3];
+  var incidents = data[4];
+  var people = data[5];
   opsPeople = people;
   return {
     eventId: id,
@@ -386,7 +400,6 @@ function unlockUrgentAlarmOnInteraction(event) {
 }
 
 function playUrgentAlarm() {
-  if (navigator.vibrate) navigator.vibrate([220, 100, 220]);
   if (!urgentAlarmEnabled || !urgentAudioContext) return;
   try {
     var context = urgentAudioContext;
@@ -452,13 +465,33 @@ async function refreshActivity() {
 }
 
 async function refreshOps() {
+  if (opsRefreshPromise) {
+    opsRefreshQueued = true;
+    return opsRefreshPromise;
+  }
+
+  opsRefreshPromise = (async function () {
+    var succeeded = true;
+    do {
+      opsRefreshQueued = false;
+      try {
+        var state = await loadOpsState();
+        renderDashboard(state);
+        refreshActivity();
+        showOpsNotice("Live · last updated " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
+        succeeded = true;
+      } catch (error) {
+        showOpsNotice(error.message || "Could not load live operations data.", true);
+        succeeded = false;
+      }
+    } while (opsRefreshQueued);
+    return succeeded;
+  })();
+
   try {
-    var state = await loadOpsState();
-    renderDashboard(state);
-    refreshActivity();
-    showOpsNotice("Live · last updated " + new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-  } catch (error) {
-    showOpsNotice(error.message || "Could not load live operations data.", true);
+    return await opsRefreshPromise;
+  } finally {
+    opsRefreshPromise = null;
   }
 }
 
@@ -487,32 +520,45 @@ document.getElementById("checkinForm").addEventListener("submit", async function
 });
 
 document.getElementById("venueGrid").addEventListener("click", async function (event) {
-  var button = event.target.closest("[data-zone]");
+  var button = event.target.closest("[data-report-zone]");
   if (!button) return;
+  var card = button.closest(".venue-card");
+  var countInput = card.querySelector("[data-zone-count]");
+  if (!countInput.reportValidity()) return;
+  button.disabled = true;
   try {
     var id = await eventId();
-    await api("/api/v1/occupancy/delta", {
-      method: "POST",
+    await api("/api/v1/occupancy/report", {
+      method: "PUT",
       body: JSON.stringify({
         event_id: id,
-        zone_name: button.getAttribute("data-zone"),
-        delta: Number(button.getAttribute("data-delta")),
+        zone_name: button.dataset.reportZone,
+        current_count: Number(countInput.value),
+        capacity: Number(countInput.max),
       }),
     });
-    refreshOps();
+    showOpsNotice("Occupancy count saved.");
+    await refreshOps();
   } catch (error) {
     showOpsNotice(error.message || "Could not update occupancy.", true);
+  } finally {
+    button.disabled = false;
   }
 });
 
 document.getElementById("alertsList").addEventListener("click", async function (event) {
   var ack = event.target.closest("[data-alert-ack]");
   var resolve = event.target.closest("[data-alert-resolve]");
+  var actionButton = ack || resolve;
+  if (!actionButton) return;
+  actionButton.disabled = true;
   try {
     if (ack) await api("/api/v1/alerts/" + ack.getAttribute("data-alert-ack") + "/acknowledge", { method: "PATCH" });
     if (resolve) await api("/api/v1/alerts/" + resolve.getAttribute("data-alert-resolve") + "/resolve", { method: "PATCH" });
-    if (ack || resolve) refreshOps();
+    var refreshed = await refreshOps();
+    if (refreshed) showOpsNotice(ack ? "Alert acknowledged and list refreshed." : "Alert resolved and list refreshed.");
   } catch (error) {
+    actionButton.disabled = false;
     showOpsNotice(error.message || "Could not update alert.", true);
   }
 });
@@ -525,6 +571,14 @@ updateAlarmToggle();
 document.getElementById("alarmToggle").addEventListener("click", toggleUrgentAlarm);
 document.getElementById("urgentIncidentDismiss").addEventListener("click", function () {
   document.getElementById("urgentIncidentDialog").hidden = true;
+});
+var activityToggle = document.getElementById("activityToggle");
+var activityList = document.getElementById("activityList");
+activityToggle.addEventListener("click", function () {
+  var expanded = activityToggle.getAttribute("aria-expanded") !== "true";
+  activityToggle.setAttribute("aria-expanded", String(expanded));
+  document.getElementById("activityToggleLabel").textContent = expanded ? "Hide activity" : "Show activity";
+  activityList.hidden = !expanded;
 });
 document.getElementById("mapSatellite").addEventListener("click", function () {
   setEventCenterBaseLayer("satellite");

@@ -17,6 +17,7 @@ CORS_ORIGINS = [
     if origin.strip()
 ]
 DEFAULT_EVENT_ID = os.getenv("DEFAULT_EVENT_ID", "summit-2026")
+SEED_OPS_DEMO_ACTIVITY = os.getenv("SEED_OPS_DEMO_ACTIVITY", "false").lower() in {"1", "true", "yes", "on"}
 APP_NAME = os.getenv("APP_NAME", "HACSA Axis")
 PUBLIC_APP_URL = os.getenv("PUBLIC_APP_URL", "http://10.209.136.101:8000").rstrip("/")
 API_V1_PREFIX = "/api/v1"
@@ -53,6 +54,7 @@ class Settings:
     DATABASE_URL = DATABASE_URL
     CORS_ORIGINS = CORS_ORIGINS
     DEFAULT_EVENT_ID = DEFAULT_EVENT_ID
+    SEED_OPS_DEMO_ACTIVITY = SEED_OPS_DEMO_ACTIVITY
     APP_NAME = APP_NAME
     PUBLIC_APP_URL = PUBLIC_APP_URL
     API_V1_PREFIX = API_V1_PREFIX

@@ -81,9 +81,25 @@ function renderVenueCards(host, venues, options) {
     if (options.adjustable) {
       var actions = document.createElement("div");
       actions.className = "venue-actions";
-      actions.innerHTML =
-        '<button type="button" class="ghost-btn" data-zone="' + venue.name + '" data-delta="-5">-5</button>' +
-        '<button type="button" class="ghost-btn" data-zone="' + venue.name + '" data-delta="5">+5</button>';
+      var label = document.createElement("label");
+      label.className = "occupancy-report";
+      var caption = document.createElement("span");
+      caption.textContent = "Observed headcount";
+      var count = document.createElement("input");
+      count.type = "number";
+      count.min = "0";
+      count.max = String(venue.capacity);
+      count.step = "1";
+      count.value = String(venue.count);
+      count.dataset.zoneCount = venue.name;
+      count.setAttribute("aria-label", "Observed headcount for " + venue.name);
+      label.append(caption, count);
+      var report = document.createElement("button");
+      report.type = "button";
+      report.className = "primary-btn";
+      report.dataset.reportZone = venue.name;
+      report.textContent = "Save count";
+      actions.append(label, report);
       node.appendChild(actions);
     }
     host.appendChild(node);

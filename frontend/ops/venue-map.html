@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Illustrative HACSA Axis venue operations map using local demonstration data." />
+  <title>Venue Operations Map | HACSA Axis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=login-brand-lockup" />
+  <link rel="stylesheet" href="venue-map.css?v=venue-map-v2" />
+</head>
+<body class="venue-map-page" data-theme="light" data-theme-default="light">
+  <div class="app-shell">
+    <header class="ops-header">
+      <a class="ops-brand venue-brand" href="index.html" aria-label="HACSA Axis Operations home">
+        <span class="ops-mark">HA</span>
+        <span class="venue-brand-copy"><strong>HACSA</strong><span>AXIS</span><small>Operations</small></span>
+      </a>
+      <nav class="ops-nav" aria-label="Operations">
+        <a href="index.html">Overview</a>
+        <a href="command-center.html">Command Center</a>
+        <a class="active" href="venue-map.html" aria-current="page">Venue Map</a>
+        <a href="safety.html">Safety</a>
+        <a href="analytics.html">Analytics</a>
+      </nav>
+      <div class="ops-tools">
+        <span class="demo-mode-badge">Demo mode</span>
+        <button class="notification-button" id="notificationToggle" type="button" aria-expanded="false" aria-controls="notificationPanel" aria-label="Show 2 demonstration notifications">
+          <span>Alerts</span><span class="notification-count" id="notificationCount">2</span>
+        </button>
+        <button class="theme-toggle" type="button" data-theme-toggle>Dark mode</button>
+        <button class="sign-out-btn" type="button" data-sign-out>Sign out</button>
+      </div>
+    </header>
+
+    <section class="page-hero venue-page-hero">
+      <div>
+        <p class="eyebrow">OPERATIONS · SIMULATED DATA</p>
+        <h1>Venue Operations Map</h1>
+        <p>Real-time venue visibility and operational monitoring</p>
+      </div>
+      <label class="event-picker" for="eventSelector">
+        <span>Selected event</span>
+        <select id="eventSelector" aria-label="Select event"></select>
+      </label>
+    </section>
+
+    <main class="page-content venue-page-content">
+      <section class="venue-location-strip" aria-label="Selected event venue">
+        <div class="venue-location-copy">
+          <span class="location-kicker">VENUE</span>
+          <strong id="venueName">HACSA Innovation &amp; Heritage Hub</strong>
+          <span id="venueCity">Accra, Ghana</span>
+        </div>
+        <div class="venue-location-note" id="venueAddressState">Venue address not verified</div>
+        <button class="directions-button" id="directionsButton" type="button" disabled title="Directions are unavailable until a verified address is configured">Get Directions</button>
+      </section>
+
+      <section class="venue-stats" aria-label="Operational summary">
+        <article class="venue-stat"><span>Total venue areas</span><strong id="statAreas">12</strong><small>Mapped locations</small></article>
+        <article class="venue-stat"><span>People inside venue</span><strong id="statPeople">0</strong><small>Reported occupancy</small></article>
+        <article class="venue-stat"><span>Active incidents</span><strong id="statIncidents">0</strong><small>Simulated reports</small></article>
+        <article class="venue-stat"><span>Areas requiring attention</span><strong id="statAttention">0</strong><small>Warning or critical</small></article>
+      </section>
+
+      <div class="venue-map-toolbar" role="toolbar" aria-label="Floor plan controls">
+        <label class="map-search" for="locationSearch">
+          <span class="sr-only">Search locations</span>
+          <input id="locationSearch" type="search" placeholder="Search venue areas" autocomplete="off" />
+        </label>
+        <label class="map-filter" for="statusFilter">
+          <span class="sr-only">Filter by status</span>
+          <select id="statusFilter">
+            <option value="all">All statuses</option>
+            <option value="warning">Warning</option>
+            <option value="critical">Critical</option>
+          </select>
+        </label>
+        <div class="map-actions">
+          <button type="button" class="map-control" id="zoomOut" aria-label="Zoom out" title="Zoom out">−</button>
+          <button type="button" class="map-control" id="zoomIn" aria-label="Zoom in" title="Zoom in">+</button>
+          <button type="button" class="map-control map-reset" id="resetMap">Reset view</button>
+          <button type="button" class="map-control map-fullscreen" id="fullscreenMap">Fullscreen</button>
+          <button type="button" class="map-control map-refresh" id="refreshDemo">Refresh demo data</button>
+        </div>
+      </div>
+      <p class="map-filter-summary" id="filterSummary" aria-live="polite"></p>
+
+      <section class="venue-map-layout" aria-label="Venue floor plan and selected location">
+        <section class="floor-plan-panel" id="floorPlanPanel" aria-labelledby="floorPlanTitle">
+          <div class="floor-plan-heading">
+            <div>
+              <span class="eyebrow">ILLUSTRATIVE FLOOR PLAN</span>
+              <h2 id="floorPlanTitle">Explore venue areas</h2>
+            </div>
+            <span class="not-to-scale">Not to scale</span>
+          </div>
+          <div class="floor-scroll" id="floorScroll" tabindex="0" aria-label="Scrollable venue floor plan">
+            <svg id="venueFloorPlan" class="venue-floor-plan" viewBox="0 0 1220 760" role="group" aria-labelledby="floorSvgTitle floorSvgDesc">
+              <title id="floorSvgTitle">Illustrative event venue floor plan</title>
+              <desc id="floorSvgDesc">An interactive, not-to-scale demonstration layout. Select a labeled room for occupancy and incident details.</desc>
+              <defs>
+                <pattern id="floorGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+                  <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#d8d3c6" stroke-width="0.7" />
+                </pattern>
+                <marker id="corridorArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 z" fill="#b7b6a9" />
+                </marker>
+              </defs>
+              <rect class="floor-background" x="24" y="30" width="1172" height="706" rx="10" />
+              <rect class="floor-grid" x="24" y="30" width="1172" height="706" rx="10" />
+              <rect class="building-outline" x="48" y="58" width="1124" height="600" rx="5" />
+              <path class="main-corridor" d="M 50 307 H 1170 V 348 H 50 Z" />
+              <path class="cross-corridor" d="M 298 350 H 313 V 657 H 298 Z M 553 350 H 568 V 657 H 553 Z M 833 350 H 848 V 657 H 833 Z" />
+              <path class="corridor-centerline" d="M 80 327 H 1135" marker-end="url(#corridorArrow)" />
+              <text class="corridor-label" x="610" y="334" text-anchor="middle">MAIN CIRCULATION</text>
+              <g class="north-indicator" aria-label="North indicator">
+                <path d="M1145 102 L1160 68 L1175 102 L1160 94 Z" />
+                <text x="1160" y="58" text-anchor="middle">N</text>
+              </g>
+              <g class="door-markers" aria-hidden="true">
+                <path d="M170 658 v16 m-18 -2 h36" />
+                <path d="M52 135 h-13 m3 -18 v36" />
+                <path d="M1168 135 h13 m-3 -18 v36" />
+                <path d="M580 658 v16 m-18 -2 h36" />
+              </g>
+              <g id="venueLocationLayer"></g>
+            </svg>
+          </div>
+          <div class="floor-plan-footer">
+            <div class="venue-legend" aria-label="Status legend">
+              <span><i class="legend-dot normal"></i>Normal</span>
+              <span><i class="legend-dot warning"></i>Warning</span>
+              <span><i class="legend-dot critical"></i>Critical</span>
+              <span><i class="legend-dot no-data"></i>No data</span>
+            </div>
+            <span class="floor-plan-caption">Illustrative layout only · confirm actual exits and room locations with venue staff.</span>
+          </div>
+        </section>
+
+        <aside class="location-details-panel" aria-labelledby="detailsTitle" aria-live="polite">
+          <div class="details-empty" id="detailsEmpty" hidden>Select a room on the floor plan to inspect its status.</div>
+          <div id="locationDetails"></div>
+        </aside>
+      </section>
+
+      <section class="incident-section" aria-labelledby="incidentSectionTitle">
+        <div class="section-heading">
+          <div><span class="eyebrow">SIMULATED REPORTS</span><h2 id="incidentSectionTitle">Incident activity</h2></div>
+          <span class="incident-data-note">Demonstration data · no responders are notified</span>
+        </div>
+        <div class="incident-list" id="incidentList" aria-live="polite"></div>
+      </section>
+
+      <div class="notification-panel" id="notificationPanel" hidden>
+        <div class="notification-panel-heading"><strong>Demonstration notifications</strong><button type="button" id="closeNotifications" aria-label="Close notifications">Close</button></div>
+        <div id="notificationList"></div>
+      </div>
+      <p class="venue-update-status" id="updateStatus" aria-live="polite"></p>
+    </main>
+  </div>
+
+  <dialog class="incident-dialog" id="incidentDialog" aria-labelledby="incidentDialogTitle">
+    <div class="incident-dialog-head"><span class="eyebrow">SIMULATED INCIDENT</span><button type="button" id="closeIncidentDialog" aria-label="Close incident details">Close</button></div>
+    <div id="incidentDialogContent"></div>
+  </dialog>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/auth-gate.js"></script>
+  <script src="theme.js?v=venue-map-theme"></script>
+  <script src="venue-map-data.js?v=venue-map-v2"></script>
+  <script src="venue-map.js?v=venue-map-v2"></script>
+</body>
+</html>

@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link rel="stylesheet" href="style.css?v=urgent-incident-escalation" />
+  <link rel="stylesheet" href="style.css?v=command-center-current-v3" />
 </head>
 <body data-theme="dark">
   <div class="app-shell">
@@ -21,6 +21,7 @@
       <nav class="ops-nav" aria-label="Operations">
         <a href="index.html">Overview</a>
         <a class="active" href="command-center.html">Command Center</a>
+        <a href="venue-map.html">Venue Map</a>
         <a href="safety.html">Safety</a>
         <a href="analytics.html">Analytics</a>
       </nav>
@@ -154,12 +155,17 @@
         <ul id="alertsList" class="alert-list"></ul>
       </section>
 
-      <section class="panel">
-        <div class="panel-header">
+      <section class="panel recent-activity-panel">
+        <div class="panel-header recent-activity-header">
           <h2 class="panel-title">Recent activity</h2>
-          <span id="activityUpdated" class="card-meta"></span>
+          <div class="recent-activity-controls">
+            <span id="activityUpdated" class="card-meta"></span>
+            <button class="activity-toggle" id="activityToggle" type="button" aria-expanded="false" aria-controls="activityList">
+              <span id="activityToggleLabel">Show activity</span><span class="activity-chevron" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
-        <ul id="activityList" class="activity-list" aria-live="polite">
+        <ul id="activityList" class="activity-list" aria-live="polite" hidden>
           <li class="activity-empty">Loading activity…</li>
         </ul>
       </section>
@@ -183,6 +189,6 @@
   <script src="theme.js"></script>
   <script src="live.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="command-center.js?v=urgent-incident-escalation"></script>
+  <script src="command-center.js?v=command-center-current-v3"></script>
 </body>
 </html>

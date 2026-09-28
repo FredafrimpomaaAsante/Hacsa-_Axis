@@ -30,3 +30,4 @@ Demo accounts (password `Axis2026!`):
 - speaker@hacsa.org
 - organiser@hacsa.org
 - ops@hacsa.org
+- vendor@hacsa.org

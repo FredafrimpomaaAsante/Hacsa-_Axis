@@ -12,7 +12,7 @@
   }
 
   var savedTheme = localStorage.getItem('ops-theme');
-  var initialTheme = savedTheme || 'dark';
+  var initialTheme = savedTheme || document.body.getAttribute('data-theme-default') || 'dark';
   applyTheme(initialTheme);
 
   document.addEventListener('click', function (event) {

@@ -83,6 +83,7 @@ def seed_demo(db: Session) -> None:
     speaker = _user(db, "speaker@hacsa.org", "Dr. Adjoa Asamoah", RoleEnum.speaker)
     attendee = _user(db, "attendee@hacsa.org", "Ama Mensah", RoleEnum.participant)
     ops = _user(db, "ops@hacsa.org", "Nana Boateng", RoleEnum.ops_lead)
+    _user(db, "vendor@hacsa.org", "Kente & Crumb", RoleEnum.vendor)
     peter = _user(db, "peter@hacsa.org", "Peter Akwaboah", RoleEnum.speaker)
     tonye = _user(db, "tonye@hacsa.org", "Tonye Cole", RoleEnum.speaker)
     nanaaba = _user(db, "nanaaba@hacsa.org", "Nana Aba Anamoah", RoleEnum.speaker)
@@ -212,14 +213,14 @@ def seed_demo(db: Session) -> None:
         )
 
     event_id = settings.DEFAULT_EVENT_ID
-    _seed_live_ops(db, event_id, ops)
+    _seed_live_ops(db, event_id, ops, settings.SEED_OPS_DEMO_ACTIVITY)
 
     db.commit()
     _ = attendee
     _ = yaw
 
 
-def _seed_live_ops(db: Session, event_id: str, ops: User) -> None:
+def _seed_live_ops(db: Session, event_id: str, ops: User, seed_activity: bool) -> None:
     staff = [
         _user(db, "achen@hacsa.org", "A. Chen", RoleEnum.staff),
         _user(db, "mpatel@hacsa.org", "M. Patel", RoleEnum.safety_officer),
@@ -252,23 +253,25 @@ def _seed_live_ops(db: Session, event_id: str, ops: User) -> None:
         "VIP Lounge": (61, 100),
         "Loading Bay": (44, 150),
     }
-    for name, (count, capacity) in zone_counts.items():
+    for name, (sample_count, capacity) in zone_counts.items():
         zone = db.query(VenueZone).filter(VenueZone.event_id == event_id, VenueZone.zone_name == name).first()
-        if zone:
-            zone.current_count = count
-            zone.capacity = capacity
-        else:
-            zone = VenueZone(event_id=event_id, zone_name=name, current_count=count, capacity=capacity)
+        if not zone:
+            zone = VenueZone(
+                event_id=event_id,
+                zone_name=name,
+                current_count=sample_count if seed_activity else 0,
+                capacity=capacity,
+            )
             db.add(zone)
-        db.flush()
-        if not db.query(OccupancyReading).filter(OccupancyReading.event_id == event_id, OccupancyReading.zone_name == name).first():
+            db.flush()
+        if seed_activity and not db.query(OccupancyReading).filter(OccupancyReading.event_id == event_id, OccupancyReading.zone_name == name).first():
             now = datetime.utcnow()
             db.add_all(
                 [
                     OccupancyReading(
                         event_id=event_id,
                         zone_name=name,
-                        current_count=max(20, count - 40),
+                        current_count=max(20, sample_count - 40),
                         capacity=capacity,
                         recorded_by=str(ops.id),
                         recorded_at=now - timedelta(hours=3),
@@ -276,13 +279,16 @@ def _seed_live_ops(db: Session, event_id: str, ops: User) -> None:
                     OccupancyReading(
                         event_id=event_id,
                         zone_name=name,
-                        current_count=count,
+                        current_count=sample_count,
                         capacity=capacity,
                         recorded_by=str(ops.id),
                         recorded_at=now - timedelta(minutes=12),
                     ),
                 ]
             )
+
+    if not seed_activity:
+        return
 
     people = db.query(User).filter(User.role.in_([RoleEnum.participant, RoleEnum.speaker])).all()
     now = datetime.utcnow()

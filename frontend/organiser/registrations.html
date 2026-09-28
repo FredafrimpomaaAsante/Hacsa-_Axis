@@ -8,6 +8,47 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="src/style.css?v=login-brand-lockup">
+  <style>
+    @media (max-width: 1000px) {
+      .registration-content,
+      .payment-cards {
+        min-width: 0;
+        max-width: 100%;
+      }
+
+      .registration-content {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .payment-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .payment-card {
+        min-width: 0;
+      }
+
+      .registration-toolbar {
+        flex-wrap: wrap;
+        min-width: 0;
+      }
+
+      .registration-toolbar .inline-search {
+        flex: 1 1 100%;
+        min-width: 0;
+      }
+
+      .registration-toolbar select {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 0;
+      }
+
+      .registration-panel .table-scroll {
+        max-width: 100%;
+        overflow-x: auto;
+      }
+    }
+  </style>
   <script src="https://kit.fontawesome.com/69b7f0c38b.js" crossorigin="anonymous"></script>
 </head>
 <body>
